@@ -5,19 +5,18 @@
         </h1>
         <nav>
             <ul class="sf-menu">
-                <li class="current">
-                    <a href="index.html">home</a>
-                    <ul>
-                        <li><a href="more.html">Who We Are</a></li>
-                        <li><a href="more.html">News</a></li>
-                        <li><a href="more.html">Contacts</a></li>
-                    </ul>
-                </li>
-                <li><a href="index-1.html">About us</a></li>
-                <li><a href="index-2.html">Services</a></li>
-                <li><a href="index-3.html">Solutions</a></li>
-                <li><a href="index-4.html">Support</a></li>
-                <li><a href="index-5.html">Contacts</a></li>
+                {% for node in nodes %}
+                    <li>
+                        <a href="">{{ node.title }}</a>
+                        {% if node.nodeChilds|length > 0 %}
+                            <ul>
+                                {% for nodeChild in node.nodeChilds %}
+                                    <li><a href="">{{ nodeChild.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             </ul>
         </nav>
         <div class="clear"></div>

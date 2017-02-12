@@ -21,6 +21,10 @@ class DefaultController extends Controller
 
     public function headerAction()
     {
-        return $this->render('default/header.html.twig');
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        
+        $nodes = $nodeRepository->getNodesParent();
+
+        return $this->render('default/header.html.twig', ['nodes' => $nodes]);
     }
 }

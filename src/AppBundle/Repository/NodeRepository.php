@@ -10,4 +10,20 @@ namespace AppBundle\Repository;
  */
 class NodeRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @return array
+     */
+    public function getNodesParent()
+    {
+        $qb = $this->createQueryBuilder('n');
+
+        $qb
+            ->andWhere('n.nodeParent is NULL')
+            ->orderBy('n.rank', 'ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

@@ -39,7 +39,7 @@ class Node
     /**
      * @var int
      *
-     * @ORM\Column(name="rank", type="integer", unique=true, nullable=false)
+     * @ORM\Column(name="rank", type="integer", nullable=false)
      */
     protected $rank;
 
@@ -61,7 +61,15 @@ class Node
     {
         $this->nodeChilds = new ArrayCollection();
     }
-    
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     /**
      * Get id
      *
