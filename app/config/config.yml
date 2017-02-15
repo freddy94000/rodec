@@ -76,3 +76,16 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
         # ...
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            toolbar: standard
+            allowedContent: true
+
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }

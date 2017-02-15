@@ -10,3 +10,8 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+page:
+    path: /{code}
+    defaults:
+        _controller: AppBundle:Default:page

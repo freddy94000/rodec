@@ -6,12 +6,28 @@
         <nav>
             <ul class="sf-menu">
                 {% for node in nodes %}
+                    {% if node.page %}
+                        {% set url = path('page', { 'code': node.page.code }) %}
+                    {% elseif node.nodeChilds|length > 0 %}
+                        {% set url = path('page', { 'code': node.url }) %}
+                    {% elseif node.url %}
+                        {% set url = path(node.url) %}
+                    {% else %}
+                        {% set url = '#' %}
+                    {% endif %}
                     <li>
-                        <a href="">{{ node.title }}</a>
+                        <a href="{{ url }}">{{ node.title }}</a>
                         {% if node.nodeChilds|length > 0 %}
                             <ul>
                                 {% for nodeChild in node.nodeChilds %}
-                                    <li><a href="">{{ nodeChild.title }}</a></li>
+                                    {% if nodeChild.page %}
+                                        {% set urlChild = path('page', { 'code': nodeChild.page.code }) %}
+                                    {% elseif nodeChild.url %}
+                                        {% set urlChild = path(nodeChild.url) %}
+                                    {% else %}
+                                        {% set urlChild = '#' %}
+                                    {% endif %}
+                                    <li><a href="{{ urlChild }}">{{ nodeChild.title }}</a></li>
                                 {% endfor %}
                             </ul>
                         {% endif %}

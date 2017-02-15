@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ node.title }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section id="content">
+        <div class="container_24">
+            <div class="wrapper">
+                {% for nodeChild in node.nodeChilds %}
+                    <article class="grid_7 suffix_1">
+                        <h3>{{ nodeChild.title|truncate(20, true, '...') }}</h3>
+                        {{ nodeChild.page.content|truncate(500, true, '...')|raw }}
+                        <a class="button" href="{{ path('page', { 'code': nodeChild.page.code }) }}">Voir la suite</a>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

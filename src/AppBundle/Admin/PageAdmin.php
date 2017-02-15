@@ -2,13 +2,14 @@
 
 namespace AppBundle\Admin;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class NodeAdmin extends AbstractAdmin
+class PageAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,11 +18,9 @@ class NodeAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
+            ->add('code')
             ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+            ->add('content')
         ;
     }
 
@@ -32,11 +31,8 @@ class NodeAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
+            ->add('code')
             ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -53,11 +49,9 @@ class NodeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->add('code')
             ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+            ->add('content', CKEditorType::class)
         ;
     }
 
@@ -68,11 +62,9 @@ class NodeAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
+            ->add('code')
             ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+            ->add('content')
         ;
     }
 }

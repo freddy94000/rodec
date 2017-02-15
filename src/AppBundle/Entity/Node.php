@@ -53,6 +53,11 @@ class Node
      */
     protected $nodeParent;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Page")
+     */
+    protected $page;
+
 
     /**
      * Constructor
@@ -214,5 +219,29 @@ class Node
     public function getNodeParent()
     {
         return $this->nodeParent;
+    }
+
+    /**
+     * Set page
+     *
+     * @param \AppBundle\Entity\Page $page
+     *
+     * @return Node
+     */
+    public function setPage(Page $page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \AppBundle\Entity\Page
+     */
+    public function getPage()
+    {
+        return $this->page;
     }
 }

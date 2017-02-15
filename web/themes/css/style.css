@@ -67,7 +67,7 @@ header .links li a span{display:block;overflow:hidden;padding:6px 0 0;}
 /********************** Content ************************/
 section#content{padding:68px 0 80px;}
 /*  Header styles */
-h1,h2,h3,h4,h5,h6{margin:0 0 37px;line-height:1.2em;color:#414141;font-weight:normal;letter-spacing:-1px;}
+h1,h2,h3,h4,h5,h6{margin:0 0 37px;line-height:1.2em;color:#414141;font-weight:normal;}
 h1{font-size:40px;}
 h2{font-size:35px;}
 h3{font-size:30px;} 
