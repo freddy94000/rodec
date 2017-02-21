@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class NewsRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getNews()
+    {
+        $qb = $this->createQueryBuilder('n');
+
+        $qb->orderBy('n.createdAt', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

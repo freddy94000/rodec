@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Actualités - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section id="content">
+        <div class="container_24">
+            <div class="wrapper">
+                {% for news in pagination %}
+                    <article class="grid_7 suffix_1">
+                        <h3>{{ news.title|truncate(20, true, '...') }}</h3>
+                        {{ news.content|truncate(500, true, '...')|raw }}
+                        <a class="button" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
+                    </article>
+                {% endfor %}
+
+            </div>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

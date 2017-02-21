@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\News;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +28,60 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+        $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
+        $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
+        
+        $news = $newsRepository->getNews();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $news, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            3/*limit per page*/
+        );
+
+        $page = $pageRepository->findOneBy(['code' => 'qui-sommes-nous']);
+        
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'pagination' => $pagination,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/actualite", name="news")
+     */
+    public function newsListAction(Request $request)
+    {
+        $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
+
+        $news = $newsRepository->getNews();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $news, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            3/*limit per page*/
+        );
+
+        return $this->render('default/news.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    /**
+     * @param News $news
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/actualite/{slug}", name="new")
+     */
+    public function newsAction(News $news)
+    {
+        return $this->render('default/new.html.twig', [
+            'news' => $news,
         ]);
     }
 

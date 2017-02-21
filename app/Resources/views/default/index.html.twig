@@ -3,63 +3,23 @@
 {% block body %}
     <section id="content">
         <div class="container_24">
-            <!--<div class="shadow">
-                <div class="main-img"><img src="themes/images/main-img.jpg" alt=""></div>
-                <ul class="links">
-                    <li><a href="more.html"><img src="themes/images/page1-icon1.png" alt=""><span>Worldwide Business Experience You Can Trust</span></a>
-                    </li>
-                    <li><a href="more.html"><img src="themes/images/page1-icon2.png" alt=""><span>Personal Strategy for Your Business Growth</span></a>
-                    </li>
-                    <li><a href="more.html"><img src="themes/images/page1-icon3.png" alt=""><span>We'll Help Your Time Work for Your Money</span></a>
-                    </li>
-                </ul>
-            </div>-->
             <div class="wrapper">
                 <article class="grid_7 suffix_1">
-                    <h3>Company News</h3>
-                    <div class="wrapper indent-bot">
-                        <figure class="img-indent2"><a class="lightbox-image hover" data-gal="prettyPhoto[1]"
-                                                       title="" href="{{ asset('themes/images/page1-img1-big.jpg') }}"><img
-                                        src="{{ asset('themes/images/page1-img1.jpg') }}" alt=""></a></figure>
-                        <div class="extra-wrap">
-                            <time datetime="2011-04-25"><a href="more.html">[25-04-2011]</a></time>
-                            Parturient amet montes nascetur ridiculus sitduim fusce feugat alesda odio morbi
-                            nuncodio.
+                    <h3>Actualité</h3>
+                    {% for new in pagination %}
+                        <div class="wrapper">
+                            <div class="extra-wrap">
+                                <time datetime="{{ new.createdAt|date('d/m/Y') }}"><a href="{{ path('new', { slug: new.slug }) }}">[{{ new.createdAt|date('d/m/Y') }}]</a></time>
+                                {{ new.content|truncate(150, true, '...')|raw }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="wrapper indent-bot">
-                        <figure class="img-indent2"><a class="lightbox-image hover" data-gal="prettyPhoto[1]"
-                                                       title="" href="{{ asset('themes/images/page1-img2-big.jpg') }}"><img
-                                        src="{{ asset('themes/images/page1-img2.jpg') }}" alt=""></a></figure>
-                        <div class="extra-wrap">
-                            <time datetime="2011-04-20"><a href="more.html">[20-04-2011]</a></time>
-                            Parturient amet montes nascetur ridiculus sitduim fusce feugat alesda odio morbi
-                            nuncodio.
-                        </div>
-                    </div>
-                    <div class="wrapper indent-bot">
-                        <figure class="img-indent2"><a class="lightbox-image hover" data-gal="prettyPhoto[1]"
-                                                       title="" href="{{ asset('themes/images/page1-img3-big.jpg') }}"><img
-                                        src="{{ asset('themes/images/page1-img3.jpg') }}" alt=""></a></figure>
-                        <div class="extra-wrap">
-                            <time datetime="2011-04-15"><a href="more.html">[15-04-2011]</a></time>
-                            Parturient amet montes nascetur ridiculus sitduim fusce feugat alesda odio morbi
-                            nuncodio.
-                        </div>
-                    </div>
-                    <a class="button" href="more.html">More News</a>
+                    {% endfor %}
+                    <a class="button" href="{{ path('news') }}">Plus d'actualité</a>
                 </article>
                 <article class="grid_7 suffix_1">
-                    <h3>Who We Are?</h3>
-                    <figure class="p2"><a class="lightbox-image hover" data-gal="prettyPhoto" title=""
-                                          href="{{ asset('themes/images/page1-img4-big.jpg') }}"><img src="{{ asset('themes/images/page1-img4.jpg') }}" alt=""></a>
-                    </figure>
-                    <p>Parturient amet montes nascetur ridiculus mus duim fusce feugiat alesda odio morbi nuncodio,
-                        gravida cursusnec, luctus loremnas tristique orci acsem aenan auctor wis duis ultricies.</p>
-                    <p>Donec accumsan malesuada orci. Donec situm amet eros. Lorem ipsum dolor consectetuer
-                        adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Utellus dolor,
-                        dapibus eget, elementum velcursus eleifend.</p>
-                    <a class="button" href="more.html">Read More</a>
+                    <h3>{{ page.title }}</h3>
+                    <p>{{ page.content|truncate(800, true, '...')|raw }}</p>
+                    <a class="button" href="{{ path('page', { 'code': page.code }) }}">Voir la suite</a>
                 </article>
                 <article class="grid_8">
                     <h3>Why Choose Us</h3>
