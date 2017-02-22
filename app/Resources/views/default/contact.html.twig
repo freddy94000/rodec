@@ -9,31 +9,34 @@
         <div class="container_24">
             <div class="wrapper">
                 <article class="grid_10">
-                    <h3>Contact Form</h3>
-                    <form id="contact-form">
-                        <div class="success"> Contact form submitted!<br>We will be in touch soon.</div>
+                    <h3>Nous contactez</h3>
+                    <form id="contact-form" method="POST" action="{{ path('contact') }}">
+                        {{form_errors(form)}}
+                        {{ form_widget(form._token) }}
+                        <div class="success">Votre message a bien été envoyé.</div>
                         <fieldset>
                             <label class="name">
-                                <input type="text" value="Your Name:">
-                                <span class="error">*This is not a valid name.</span>
-                                <span class="empty">*This field is required.</span>
+                                {{ form_widget(form.name) }}
+                                <span class="empty">Champ obligatoire</span>
                             </label>
                             <label class="phone">
-                                <input type="text" value="Telephone:">
-                                <span class="error">*This is not a valid phone number.</span>
-                                <span class="empty">*This field is required.</span>
+                                {{ form_widget(form.phoneNumber) }}
+                                <span class="error">Le numéro de téléphone n'est pas valide</span>
+                                <span class="empty">Champ obligatoire</span>
                             </label>
                             <label class="email">
-                                <input type="text" value="E-mail:">
-                                <span class="error">*This is not a valid email address.</span>
-                                <span class="empty">*This field is required.</span>
+                                {{ form_widget(form.email) }}
+                                <span class="error">L'email n'est pas valide</span>
+                                <span class="empty">Champ obligatoire</span>
                             </label>
                             <label class="message">
-                                <textarea>Message:</textarea>
-                                <span class="error">*The message is too short.</span>
-                                <span class="empty">*This field is required.</span>
+                                {{ form_widget(form.message) }}
+                                <span class="empty">Champ obligatoire</span>
                             </label>
-                            <div class="btns"><a class="button" data-type="reset">Reset</a><a class="button" data-type="submit">Submit</a></div>
+                            <div class="btns">
+                                <input class="button" type="reset" value="Annuler" />
+                                <input class="button" type="submit" value="Envoyer" />
+                            </div>
                         </fieldset>
                     </form>
                 </article>

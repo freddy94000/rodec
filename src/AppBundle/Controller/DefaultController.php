@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Contact;
 use AppBundle\Entity\News;
+use AppBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,8 +123,28 @@ class DefaultController extends Controller
     /**
      * @Route("/contact", name="contact")
      */
-    public function contactAction()
+    public function contactAction(Request $request)
     {
-        return $this->render('default/contact.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($contact);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Votre message a bien été envoyé'
+            );
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('default/contact.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

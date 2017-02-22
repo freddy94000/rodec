@@ -4,6 +4,13 @@
     <section id="content">
         <div class="container_24">
             <div class="wrapper">
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="download-box">
+                        <p class="icon"><img src="{{ asset('themes/images/icon-download.png') }}" alt="" width="25"></p>
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+
                 <article class="grid_7 suffix_1">
                     <h3>Actualité</h3>
                     {% for new in pagination %}
