@@ -34,8 +34,9 @@
                     </div>
                     <div id="box-newsletter">
                         <h6>Newsletter</h6>
-                        <form method="post" action="">
-                            <input type="text" class="newsletter-input" placeholder="Email">
+                        <form method="post" action="{{ path('homepage') }}">
+                            {{ form_widget(form._token) }}
+                            {{ form_widget(form.email) }}
                             <button type="submit" class="newsletter-submit button">M'inscrire</button>
                         </form>
                     </div>

@@ -21,3 +21,9 @@ services:
         arguments: [~, AppBundle\Entity\News, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: News }
+
+    app.admin.newsletter:
+        class: AppBundle\Admin\NewsletterAdmin
+        arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Newsletter }

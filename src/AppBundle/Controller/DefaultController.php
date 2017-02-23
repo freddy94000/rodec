@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Entity\News;
+use AppBundle\Entity\Newsletter;
 use AppBundle\Form\ContactType;
+use AppBundle\Form\NewsletterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +34,7 @@ class DefaultController extends Controller
     {
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
+        $em = $this->getDoctrine()->getManager();
         
         $news = $newsRepository->getNews();
 
@@ -44,9 +47,27 @@ class DefaultController extends Controller
 
         $page = $pageRepository->findOneBy(['code' => 'qui-sommes-nous']);
         
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            $em->persist($newsletter);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Votre inscription à la newsletter a bien été enregistrée'
+            );
+            
+            return $this->redirectToRoute('homepage');
+        }
+        
+        
         return $this->render('default/index.html.twig', [
             'pagination' => $pagination,
             'page' => $page,
+            'form' => $form->createView()
         ]);
     }
 
