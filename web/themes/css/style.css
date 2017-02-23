@@ -302,3 +302,57 @@ a#aToolTipCloseBtn{display:block;height:20px;width:20px;overflow:hidden;backgrou
 .code a.code-icon i{padding-right:6px;font-style:normal}
 .code div.grabber{display:none}
 .code code{padding:0 10px 0 10px;background:#f6f6f6;color:#333;border:1px solid #dfdfdf;white-space:pre;overflow:auto}
+
+#box-newsletter {
+	padding: 20px 10px;
+	background-color: #153c51;
+	margin-top: 20px;
+}
+
+#box-newsletter h6 {
+	color: white;
+}
+
+.button:hover, #box-newsletter .newsletter-submit:hover {
+	background-color: black;
+}
+
+#box-newsletter .newsletter-submit {
+	width: 100%;
+	margin-top: 10px;
+	border: 0;
+	color: white;
+	background-color: #37a8ca;
+	cursor: pointer;
+}
+
+input.newsletter-input {
+	width: 270px;
+	border-top: none;
+	border-left: none;
+	margin-bottom: 10px;
+	padding: 10px;
+	box-shadow: 0 1px 2px black;
+}
+
+#box-espace-client {
+	padding: 20px 10px;
+	background-color: #153c51;
+}
+
+.espace-client {
+	margin: 0;
+	width: 270px;
+	text-align: center;
+	padding: 10px;
+}
+
+button.contact-bttn {
+	border: none;
+	cursor: pointer;
+}
+
+#contact-form input, #contact-form textarea {
+	border-top: none;
+	border-left: none;
+}
