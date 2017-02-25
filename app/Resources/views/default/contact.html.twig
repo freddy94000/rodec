@@ -44,19 +44,16 @@
                     <h3>Plan d'accès et coordonnées</h3>
                     <iframe id="map_canvas" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=Brooklyn,+New+York,+NY,+United+States&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=61.282355,146.513672&amp;ie=UTF8&amp;hq=&amp;hnear=Brooklyn,+Kings,+New+York&amp;ll=40.649974,-73.950005&amp;spn=0.01628,0.025663&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
                     <div class="wrapper">
-                        <article class="grid_4 alpha">
-                            {#<strong class="color-4">The Company Name Inc. 8901 Marmora Road, Glasgow, D04 89GR.</strong>#}
-                            <strong class="color-4">The Company Name Inc.</strong>
-                            <strong class="color-4">8901 Marmora Road,</strong>
-                            <strong class="color-4">Glasgow, D04 89GR.</strong>
+                        <article class="grid_6 alpha">
+                            <strong class="color-4">{{ informationRepository.findOneByDataKey('entreprise').dataValue() }}</strong><br />
+                            <strong class="color-4">{{ informationRepository.findOneByDataKey('adresse').dataValue() }}</strong><br />
+                            <strong class="color-4">{{ informationRepository.findOneByDataKey('code-postal').dataValue() }} {{ informationRepository.findOneByDataKey('ville').dataValue() }}</strong>
                         </article>
-                        <article class="grid_5 prefix_3">
+                        <article class="grid_6">
                             <dl>
-                                <dd><span>Freephone:</span>+1 800 559 6580</dd>
-                                <dd><span>Telephone:</span>+1 800 603 6035</dd>
-                                <dd><span>FAX:</span>+1 800 889 9898 </dd>
-                                <dd>E-mail: <a href="more.html">mail@demolink.org</a></dd>
-                                <dd>Skype: <a href="more.html">@skypename</a></dd>
+                                <dd><span>Téléphone:</span>{{ informationRepository.findOneByDataKey('telephone').dataValue() }}</dd>
+                                <dd><span>Portable:</span>{{ informationRepository.findOneByDataKey('portable').dataValue() }}</dd>
+                                <dd><span>E-mail:</span>{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></dd>
                             </dl>
                         </article>
                     </div>

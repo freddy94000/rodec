@@ -34,6 +34,7 @@ class DefaultController extends Controller
     {
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $em = $this->getDoctrine()->getManager();
         
         $news = $newsRepository->getNews();
@@ -46,6 +47,8 @@ class DefaultController extends Controller
         );
 
         $page = $pageRepository->findOneBy(['code' => 'qui-sommes-nous']);
+
+        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
         
         $newsletter = new Newsletter();
         $form = $this->createForm(NewsletterType::class, $newsletter);
@@ -67,7 +70,8 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', [
             'pagination' => $pagination,
             'page' => $page,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'lien' => $lienEspaceClient
         ]);
     }
 
@@ -146,7 +150,9 @@ class DefaultController extends Controller
      */
     public function contactAction(Request $request)
     {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $em = $this->getDoctrine()->getManager();
+
         $contact = new Contact();
 
         $form = $this->createForm(ContactType::class, $contact);
@@ -166,6 +172,7 @@ class DefaultController extends Controller
 
         return $this->render('default/contact.html.twig', [
             'form' => $form->createView(),
+            'informationRepository' => $informationRepository
         ]);
     }
 }
