@@ -49,7 +49,6 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('code')
             ->add('title')
             ->add('content', CKEditorType::class)
         ;

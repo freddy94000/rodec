@@ -23,7 +23,7 @@
                                     {% if nodeChild.page %}
                                         {% set urlChild = path('page', { 'code': nodeChild.page.code }) %}
                                     {% elseif nodeChild.url %}
-                                        {% set urlChild = path(nodeChild.url) %}
+                                        {% set urlChild = path('page', {'code': nodeChild.url}) %}
                                     {% else %}
                                         {% set urlChild = '#' %}
                                     {% endif %}

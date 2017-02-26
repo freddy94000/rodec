@@ -84,6 +84,10 @@ class DefaultController extends Controller
     public function newsListAction(Request $request)
     {
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter);
 
         $news = $newsRepository->getNews();
 
@@ -91,11 +95,13 @@ class DefaultController extends Controller
         $pagination = $paginator->paginate(
             $news, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            3/*limit per page*/
+            4/*limit per page*/
         );
 
         return $this->render('default/news.html.twig', [
             'pagination' => $pagination,
+            'form' => $form->createView(),
+            'lien' => $lienEspaceClient
         ]);
     }
 
@@ -107,8 +113,15 @@ class DefaultController extends Controller
      */
     public function newsAction(News $news)
     {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter);
+
         return $this->render('default/new.html.twig', [
             'news' => $news,
+            'form' => $form->createView(),
+            'lien' => $lienEspaceClient
         ]);
     }
 
@@ -132,17 +145,29 @@ class DefaultController extends Controller
      */
     public function pageAction($code)
     {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
         $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter);
 
         $page = $pageRepository->findOneBy(['code' => $code]);
 
         if (!$page) {
             $node = $nodeRepository->findOneBy(['url' => $code]);
-            return $this->render('default/node.html.twig', ['node' => $node]);
+            return $this->render('default/node.html.twig', [
+                'node' => $node,
+                'form' => $form->createView(),
+                'lien' => $lienEspaceClient
+            ]);
         }
 
-        return $this->render('default/page.html.twig', ['page' => $page]);
+        return $this->render('default/page.html.twig', [
+            'page' => $page,
+            'form' => $form->createView(),
+            'lien' => $lienEspaceClient
+        ]);
     }
 
     /**

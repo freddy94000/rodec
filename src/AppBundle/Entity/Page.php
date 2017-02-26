@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Page
@@ -24,6 +25,7 @@ class Page
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="code", type="string", length=255, unique=true)
      */
     private $code;
