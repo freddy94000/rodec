@@ -28,7 +28,8 @@ class EmailFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Email'
+            'data_class' => 'AppBundle\Entity\Email',
+            'csrf_protection' => false,
         ));
     }
 
