@@ -12,7 +12,6 @@
                     <h3>Nous contactez</h3>
                     <form id="contact-form" method="POST" action="{{ path('contact') }}">
                         {{form_errors(form)}}
-                        {{ form_widget(form._token) }}
                         <div class="success">Votre message a bien été envoyé.</div>
                         <fieldset>
                             <label class="name">
@@ -38,6 +37,7 @@
                                 <button class="contact-bttn button" type="submit">Envoyer</button>
                             </div>
                         </fieldset>
+                        {{ form_rest(form) }}
                     </form>
                 </article>
                 <article class="grid_13 prefix_1">
