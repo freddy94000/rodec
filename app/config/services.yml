@@ -51,3 +51,7 @@ services:
         arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Newsletter }
+
+    app.service.site_map:
+        class: AppBundle\Service\SiteMap
+        arguments: ['@doctrine.orm.entity_manager', '@router']

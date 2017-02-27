@@ -209,4 +209,24 @@ class DefaultController extends Controller
             'informationRepository' => $informationRepository
         ]);
     }
+
+    /**
+     * @Route("/plan-du-site", name="plan")
+     */
+    public function planAction()
+    {
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $nodes = $nodeRepository->getNodesParent();
+        
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
+        $newsletter = new Email();
+        $form = $this->createForm(EmailFormType::class, $newsletter);
+
+        return $this->render('default/plan.html.twig', [
+            'form' => $form->createView(),
+            'lien' => $lienEspaceClient,
+            'nodes' => $nodes,
+        ]);
+    }
 }

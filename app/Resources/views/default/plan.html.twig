@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Plan du site - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section id="content">
+        <div class="container_24">
+            <div class="wrapper">
+                <article class="grid_15 suffix_1">
+                    <h1>Plan du site</h1>
+                    <ul>
+                        {% for node in nodes %}
+                            {% if node.page %}
+                                {% set url = path('page', { 'code': node.page.code }) %}
+                            {% elseif node.nodeChilds|length > 0 %}
+                                {% set url = path('page', { 'code': node.url }) %}
+                            {% elseif node.url %}
+                                {% set url = path(node.url) %}
+                            {% else %}
+                                {% set url = '#' %}
+                            {% endif %}
+                            <li>
+                                <a href="{{ url }}">{{ node.title }}</a>
+                                {% if node.nodeChilds|length > 0 %}
+                                    <ul>
+                                        {% for nodeChild in node.nodeChilds %}
+                                            {% if nodeChild.page %}
+                                                {% set urlChild = path('page', { 'code': nodeChild.page.code }) %}
+                                            {% elseif nodeChild.url %}
+                                                {% set urlChild = path('page', {'code': nodeChild.url}) %}
+                                            {% else %}
+                                                {% set urlChild = '#' %}
+                                            {% endif %}
+                                            <li>
+                                                <a href="{{ urlChild }}">{{ nodeChild.title }}</a>
+                                                {% if nodeChild.nodeChilds|length > 0 %}
+                                                    <ul>
+                                                        {% for nodeChildChild in nodeChild.nodeChilds %}
+                                                            {% set urlChildChild = path('page', { 'code': nodeChildChild.page.code }) %}
+                                                            <li><a href="{{ urlChildChild }}">{{ nodeChildChild.title }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                        <li><a href="{{ path('news') }}">Actualités</a></li>
+                        <li><a href="{{ path('page', {'code': 'mention-legale'}) }}">Mention Légale</a></li>
+                    </ul>
+                </article>
+                <article class="grid_8">
+                    <div id="box-espace-client">
+                        <a href="{{ lien.dataValue }}" class="espace-client button" target="_blank">Mon Espace Client</a>
+                    </div>
+                    <div id="box-newsletter">
+                        <h6>Newsletter</h6>
+                        <form method="post" action="{{ path('homepage') }}">
+                            {{ form_widget(form._token) }}
+                            {{ form_widget(form.email) }}
+                            <button type="submit" class="newsletter-submit button">M'inscrire</button>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+{% endblock %}
