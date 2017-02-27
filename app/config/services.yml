@@ -8,7 +8,7 @@ services:
         class: AppBundle\Admin\NodeAdmin
         arguments: [~, AppBundle\Entity\Node, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Node }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Menu }
 
     app.admin.page:
         class: AppBundle\Admin\PageAdmin
@@ -22,11 +22,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: News }
 
-    app.admin.newsletter:
-        class: AppBundle\Admin\NewsletterAdmin
-        arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]
+    app.admin.email:
+        class: AppBundle\Admin\EmailAdmin
+        arguments: [~, AppBundle\Entity\Email, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Newsletter }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Email }
 
     app.admin.information:
         class: AppBundle\Admin\InformationAdmin

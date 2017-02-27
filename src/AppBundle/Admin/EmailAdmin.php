@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
-class NewsletterAdmin extends AbstractAdmin
+class EmailAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper

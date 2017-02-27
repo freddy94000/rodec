@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NewsletterType extends AbstractType
+class EmailFormType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class NewsletterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Newsletter'
+            'data_class' => 'AppBundle\Entity\Email'
         ));
     }
 

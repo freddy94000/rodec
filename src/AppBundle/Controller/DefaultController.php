@@ -4,9 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Entity\News;
-use AppBundle\Entity\Newsletter;
+use AppBundle\Entity\Email;
 use AppBundle\Form\ContactType;
-use AppBundle\Form\NewsletterType;
+use AppBundle\Form\EmailFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,8 +50,8 @@ class DefaultController extends Controller
 
         $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
         
-        $newsletter = new Newsletter();
-        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletter = new Email();
+        $form = $this->createForm(EmailFormType::class, $newsletter);
         $form->handleRequest($request);
         
         if ($form->isValid()) {
@@ -86,8 +86,8 @@ class DefaultController extends Controller
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Newsletter();
-        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletter = new Email();
+        $form = $this->createForm(EmailFormType::class, $newsletter);
 
         $news = $newsRepository->getNews();
 
@@ -115,8 +115,8 @@ class DefaultController extends Controller
     {
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Newsletter();
-        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletter = new Email();
+        $form = $this->createForm(EmailFormType::class, $newsletter);
 
         return $this->render('default/new.html.twig', [
             'news' => $news,
@@ -149,8 +149,8 @@ class DefaultController extends Controller
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
         $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
         $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Newsletter();
-        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletter = new Email();
+        $form = $this->createForm(EmailFormType::class, $newsletter);
 
         $page = $pageRepository->findOneBy(['code' => $code]);
 
@@ -176,6 +176,8 @@ class DefaultController extends Controller
     public function contactAction(Request $request)
     {
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        $email = $informationRepository->findOneBy(['dataKey' => 'email']);
+
         $em = $this->getDoctrine()->getManager();
 
         $contact = new Contact();
@@ -186,6 +188,13 @@ class DefaultController extends Controller
         if ($form->isValid()) {
             $em->persist($contact);
             $em->flush();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($contact->getName() . ' <' . $contact->getEmail() . ' - ' . $contact->getPhoneNumber(). '> vous a envoyé un message depuis rodecconseils.fr' )
+                ->setFrom($email->getDataValue())
+                ->setTo($email->getDataValue())
+                ->setBody($contact->getMessage());
+            $this->get('mailer')->send($message);
 
             $this->addFlash(
                 'notice',

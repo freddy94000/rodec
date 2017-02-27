@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Newsletter
  *
- * @ORM\Table(name="newsletter")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsletterRepository")
+ * @ORM\Table(name="email")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmailRepository")
  */
-class Newsletter
+class Email
 {
     /**
      * @var int
@@ -44,7 +44,7 @@ class Newsletter
      *
      * @param string $email
      *
-     * @return Newsletter
+     * @return Email
      */
     public function setEmail($email)
     {
