@@ -6,16 +6,17 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Show\ShowMapper;
 
-class InformationAdmin extends AbstractAdmin
+class ContactAdmin extends AbstractAdmin
 {
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
             ->remove('create')
-            ->remove('delete')
+            ->remove('edit')
         ;
     }
 
@@ -26,8 +27,11 @@ class InformationAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('name')
+            ->add('phoneNumber')
+            ->add('email')
+            ->add('message')
+            ->add('createdAt')
         ;
     }
 
@@ -38,8 +42,10 @@ class InformationAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('name')
+            ->add('phoneNumber')
+            ->add('email')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -51,24 +57,17 @@ class InformationAdmin extends AbstractAdmin
     }
 
     /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->add('dataValue')
-        ;
-    }
-
-    /**
      * @param ShowMapper $showMapper
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('name')
+            ->add('phoneNumber')
+            ->add('email')
+            ->add('message')
+            ->add('createdAt')
         ;
     }
 }

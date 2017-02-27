@@ -20,16 +20,34 @@ services:
         class: AppBundle\Admin\NewsAdmin
         arguments: [~, AppBundle\Entity\News, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: News }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Actualité }
 
     app.admin.email:
         class: AppBundle\Admin\EmailAdmin
         arguments: [~, AppBundle\Entity\Email, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Email }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Email Newsletter }
 
     app.admin.information:
         class: AppBundle\Admin\InformationAdmin
         arguments: [~, AppBundle\Entity\Information, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Information }
+
+    app.event_listener.doctrine_listener:
+        class: AppBundle\EventListener\DoctrineListener
+        arguments: ['@mailer']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    app.admin.contact:
+        class: AppBundle\Admin\ContactAdmin
+        arguments: [~, AppBundle\Entity\Contact, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contact }
+
+    app.admin.newsletter:
+        class: AppBundle\Admin\NewsletterAdmin
+        arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Newsletter }

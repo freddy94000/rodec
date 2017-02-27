@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -9,13 +10,12 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class InformationAdmin extends AbstractAdmin
+class NewsletterAdmin extends AbstractAdmin
 {
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
-            ->remove('create')
-            ->remove('delete')
+            ->remove('edit')
         ;
     }
 
@@ -26,8 +26,9 @@ class InformationAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('subject')
+            ->add('content')
+            ->add('createdAt')
         ;
     }
 
@@ -38,8 +39,8 @@ class InformationAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('subject')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -56,7 +57,8 @@ class InformationAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('dataValue')
+            ->add('subject')
+            ->add('content', CKEditorType::class)
         ;
     }
 
@@ -67,8 +69,9 @@ class InformationAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('subject')
+            ->add('content')
+            ->add('createdAt')
         ;
     }
 }
