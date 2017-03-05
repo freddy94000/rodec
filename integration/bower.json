@@ -1,0 +1,21 @@
+{
+  "name": "rodec",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/fonts/*",
+        "dist/js/*",
+        "js/*"
+      ]
+    },
+    "jquery": {
+      "main": [
+        "dist/jquery.min.js"
+      ]
+    }
+  }
+}

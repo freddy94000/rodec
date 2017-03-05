@@ -34,6 +34,7 @@ class DefaultController extends Controller
     {
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
+        $emailRepository = $this->getDoctrine()->getRepository('AppBundle:Email');
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $em = $this->getDoctrine()->getManager();
         
@@ -55,8 +56,10 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
-            $em->persist($newsletter);
-            $em->flush();
+            if (!$emailRepository->findOneBy(['email' => $newsletter->getEmail()])) {
+                $em->persist($newsletter);
+                $em->flush();
+            }
 
             $this->addFlash(
                 'notice',
