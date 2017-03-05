@@ -16,7 +16,7 @@ class EmailFormType extends AbstractType
     {
         $builder->add('email', EmailType::class, [
             'attr' => [
-                'class' => 'newsletter-input',
+                'class' => 'form-control',
                 'placeholder' => 'Email'
             ]
         ]);

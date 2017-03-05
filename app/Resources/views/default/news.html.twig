@@ -5,40 +5,23 @@
 {% endblock %}
 
 {% block body %}
-    <section id="content">
-        <div class="container_24">
-            <div class="wrapper">
-                <div class="grid_16">
-                    {% for key, news in pagination %}
-                        <article class="grid_7 {{ (key is odd) ? '' : 'suffix_1' }}">
-                            <h3>{{ news.title|truncate(20, true, '...') }}</h3>
-                            {{ news.content|truncate(500, true, '...')|raw }}
-                            <a class="button" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
-                        </article>
-                    {% endfor %}
-                </div>
-                <div class="grid_8">
-                    <article>
-                        <div id="box-espace-client">
-                            <a href="{{ lien.dataValue }}" class="espace-client button" target="_blank">Mon Espace Client</a>
-                        </div>
-                        <div id="box-newsletter">
-                            <h6>Newsletter</h6>
-                            <form method="post" action="{{ path('homepage') }}">
-                                {{ form_widget(form.email) }}
-                                <button type="submit" class="newsletter-submit button">M'inscrire</button>
-                            </form>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-        <div class="container_24">
-            <div class="wrapper">
-                <div class="navigation">
+    <div class="row">
+        <div class="col-sm-16 col-xs-24">
+            <div class="row">
+                {% for news in pagination %}
+                    <div class="col-sm-12 col-xs-24">
+                        <h3>{{ news.title|truncate(20, true, '...') }}</h3>
+                        <p>{{ news.content|truncate(500, true, '...')|raw }}</p>
+                        <a class="btn btn-default" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
+                    </div>
+                {% endfor %}
+                <div class="col-sm-24 col-xs-24">
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>
-    </section>
+        <div class="col-sm-8 col-xs-24">
+            {% include 'default/block.html.twig' %}
+        </div>
+    </div>
 {% endblock %}

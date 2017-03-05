@@ -5,59 +5,47 @@
 {% endblock %}
 
 {% block body %}
-    <section id="content">
-        <div class="container_24">
-            <div class="wrapper">
-                <article class="grid_10">
-                    <h3>Nous contactez</h3>
-                    <form id="contact-form" method="POST" action="{{ path('contact') }}">
-                        {{form_errors(form)}}
-                        <div class="success">Votre message a bien été envoyé.</div>
-                        <fieldset>
-                            <label class="name">
-                                {{ form_widget(form.name) }}
-                                <span class="empty">Champ obligatoire</span>
-                            </label>
-                            <label class="phone">
-                                {{ form_widget(form.phoneNumber) }}
-                                <span class="error">Le numéro de téléphone n'est pas valide</span>
-                                <span class="empty">Champ obligatoire</span>
-                            </label>
-                            <label class="email">
-                                {{ form_widget(form.email) }}
-                                <span class="error">L'email n'est pas valide</span>
-                                <span class="empty">Champ obligatoire</span>
-                            </label>
-                            <label class="message">
-                                {{ form_widget(form.message) }}
-                                <span class="empty">Champ obligatoire</span>
-                            </label>
-                            <div class="btns">
-                                <button class="contact-bttn button" type="reset">Annuler</button>
-                                <button class="contact-bttn button" type="submit">Envoyer</button>
-                            </div>
-                        </fieldset>
-                    </form>
-                </article>
-                <article class="grid_13 prefix_1">
-                    <h3>Plan d'accès et coordonnées</h3>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2623.3276071295654!2d2.322025015246903!3d48.89009337929062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66facce34f113%3A0xc59e65dba251b734!2s150+Rue+Legendre%2C+75017+Paris!5e0!3m2!1sfr!2sfr!4v1488213307648" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <div class="wrapper">
-                        <article class="grid_6 alpha">
-                            <strong class="color-4">{{ informationRepository.findOneByDataKey('entreprise').dataValue() }}</strong><br />
-                            <strong class="color-4">{{ informationRepository.findOneByDataKey('adresse').dataValue() }}</strong><br />
-                            <strong class="color-4">{{ informationRepository.findOneByDataKey('code-postal').dataValue() }} {{ informationRepository.findOneByDataKey('ville').dataValue() }}</strong>
-                        </article>
-                        <article class="grid_6">
-                            <dl>
-                                <dd><span>Téléphone:</span>{{ informationRepository.findOneByDataKey('telephone').dataValue() }}</dd>
-                                <dd><span>Portable:</span>{{ informationRepository.findOneByDataKey('portable').dataValue() }}</dd>
-                                <dd><span>E-mail:</span>{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></dd>
-                            </dl>
-                        </article>
-                    </div>
-                </article>
+    <div class="row">
+        <div class="col-sm-10 col-xs-24">
+            <h3>Nous contactez</h3>
+            <form id="contact-form" method="POST" action="{{ path('contact') }}">
+                {{form_errors(form)}}
+                <div class="form-group">
+                    {{ form_widget(form.name) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.phoneNumber) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.email) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.message) }}
+                </div>
+                <button class="btn btn-default" type="submit" id="mailSubmit">Envoyer</button>
+            </form>
+        </div>
+        <div class="col-sm-14 col-xs-24" id="map">
+            <h3>Plan d'accès et coordonnées</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2623.3276071295654!2d2.322025015246903!3d48.89009337929062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66facce34f113%3A0xc59e65dba251b734!2s150+Rue+Legendre%2C+75017+Paris!5e0!3m2!1sfr!2sfr!4v1488213307648"
+                    frameborder="0" style="border:0" allowfullscreen>
+            </iframe>
+            <div class="row">
+                <div class="col-xs-24 col-sm-12 address">
+                    <dl>
+                        <dt>{{ informationRepository.findOneByDataKey('entreprise').dataValue() }}</dt>
+                        <dt>{{ informationRepository.findOneByDataKey('adresse').dataValue() }}</dt>
+                        <dt>{{ informationRepository.findOneByDataKey('code-postal').dataValue() }} {{ informationRepository.findOneByDataKey('ville').dataValue() }}</dt>
+                    </dl>
+                </div>
+                <div class="col-xs-24 col-sm-12 number">
+                    <dl class="dl-horizontal">
+                        <dt>Téléphone:</dt><dd>{{ informationRepository.findOneByDataKey('telephone').dataValue() }}</dd>
+                        <dt>Portable:</dt><dd>{{ informationRepository.findOneByDataKey('portable').dataValue() }}</dd>
+                        <dt>E-mail:</dt><dd><a href="mailto:{{ informationRepository.findOneByDataKey('email').dataValue() }}">{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></dd>
+                    </dl>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

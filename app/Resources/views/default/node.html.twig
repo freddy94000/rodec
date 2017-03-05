@@ -5,46 +5,30 @@
 {% endblock %}
 
 {% block body %}
-    <section id="content">
-        <div class="container_24">
-            <div class="wrapper">
-                <div class="grid_16">
-                    {% set counter = 0 %}
-                    {% for key, nodeChild in node.nodeChilds %}
-                        {% if nodeChild.page %}
-                            {% set counter = counter + 1 %}
-                            <article class="grid_7 {{ (counter is odd) ? 'suffix_1' : '' }}">
-                                <h3>{{ nodeChild.title|truncate(10, true, '...') }}</h3>
-                                {{ nodeChild.page.content|truncate(500, true, '...')|raw }}
-                                <a class="button" href="{{ path('page', { 'code': nodeChild.page.code }) }}">Voir la suite</a>
-                            </article>
-                        {% else %}
-                            {% for key2, nodeChildTwo in nodeChild.nodeChilds %}
-                                {% set counter = counter + 1 %}
-                                <article class="grid_7 {{ (counter is odd) ? 'suffix_1' : '' }}">
-                                    <h3>{{ nodeChildTwo.title|truncate(10, true, '...') }}</h3>
-                                    {{ nodeChildTwo.page.content|truncate(500, true, '...')|raw }}
-                                    <a class="button" href="{{ path('page', { 'code': nodeChildTwo.page.code }) }}">Voir la suite</a>
-                                </article>
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="grid_8">
-                    <article>
-                        <div id="box-espace-client">
-                            <a href="{{ lien.dataValue }}" class="espace-client button" target="_blank">Mon Espace Client</a>
+    <div class="row">
+        <div class="col-sm-16 col-xs-24">
+            <div class="row">
+                {% for nodeChild in node.nodeChilds %}
+                    {% if nodeChild.page %}
+                        <div class="col-sm-12 col-xs-24">
+                            <h3>{{ nodeChild.title|truncate(10, true, '...') }}</h3>
+                            <p>{{ nodeChild.page.content|truncate(500, true, '...')|raw }}</p>
+                            <a class="btn btn-default" href="{{ path('page', { 'code': nodeChild.page.code }) }}">Voir la suite</a>
                         </div>
-                        <div id="box-newsletter">
-                            <h6>Newsletter</h6>
-                            <form method="post" action="{{ path('homepage') }}">
-                                {{ form_widget(form.email) }}
-                                <button type="submit" class="newsletter-submit button">M'inscrire</button>
-                            </form>
-                        </div>
-                    </article>
-                </div>
+                    {% else %}
+                        {% for nodeChildTwo in nodeChild.nodeChilds %}
+                            <div class="col-sm-12 col-xs-24">
+                                <h3>{{ nodeChildTwo.title|truncate(10, true, '...') }}</h3>
+                                <p>{{ nodeChildTwo.page.content|truncate(500, true, '...')|raw }}</p>
+                                <a class="btn btn-default" href="{{ path('page', { 'code': nodeChildTwo.page.code }) }}">Voir la suite</a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
-    </section>
+        <div class="col-sm-8 col-xs-24">
+            {% include 'default/block.html.twig' %}
+        </div>
+    </div>
 {% endblock %}

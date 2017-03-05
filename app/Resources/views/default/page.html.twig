@@ -5,26 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <section id="content">
-        <div class="container_24">
-            <div class="wrapper">
-                <article class="grid_15 suffix_1">
-                    <h1>{{ page.title }}</h1>
-                    {{ page.content|raw }}
-                </article>
-                <article class="grid_8">
-                    <div id="box-espace-client">
-                        <a href="{{ lien.dataValue }}" class="espace-client button" target="_blank">Mon Espace Client</a>
-                    </div>
-                    <div id="box-newsletter">
-                        <h6>Newsletter</h6>
-                        <form method="post" action="{{ path('homepage') }}">
-                            {{ form_widget(form.email) }}
-                            <button type="submit" class="newsletter-submit button">M'inscrire</button>
-                        </form>
-                    </div>
-                </article>
-            </div>
+    <div class="row">
+        <div class="col-sm-16 col-xs-24">
+            <h1>{{ page.title }}</h1>
+            {{ page.content|raw }}
         </div>
-    </section>
+        <div class="col-sm-8 col-xs-24">
+            {% include 'default/block.html.twig' %}
+        </div>
+    </div>
 {% endblock %}
