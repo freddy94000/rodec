@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+        {% if node.nodeParent %}
+            <li><a href="{{ path('page', { 'code': node.nodeParent.url }) }}">{{ node.nodeParent.title }}</a></li>
+        {% endif %}
+        <li class="active">{{ node.title }}</li>
+    </ol>
     <div class="row">
         <div class="col-sm-16 col-xs-24">
             <div class="row">

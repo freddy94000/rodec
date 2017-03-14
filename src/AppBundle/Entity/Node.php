@@ -54,7 +54,7 @@ class Node
     protected $nodeParent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\OneToOne(targetEntity="Page", inversedBy="node")
      */
     protected $page;
 

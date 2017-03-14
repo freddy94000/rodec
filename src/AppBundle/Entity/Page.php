@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -43,6 +44,11 @@ class Page
      * @ORM\Column(name="content", type="text")
      */
     private $content;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Node", mappedBy="page")
+     */
+    protected $node;
 
 
     /**
@@ -134,5 +140,28 @@ class Page
     {
         return $this->content;
     }
-}
 
+    /**
+     * Set node
+     *
+     * @param \AppBundle\Entity\Node $node
+     *
+     * @return Page
+     */
+    public function setNode(Node $node = null)
+    {
+        $this->node = $node;
+
+        return $this;
+    }
+
+    /**
+     * Get node
+     *
+     * @return \AppBundle\Entity\Node
+     */
+    public function getNode()
+    {
+        return $this->node;
+    }
+}
