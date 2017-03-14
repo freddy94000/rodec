@@ -14,6 +14,9 @@
         <div class="col-sm-16 col-xs-24">
             <h1>{{ news.title }}</h1>
             <p>{{ news.content|raw }}</p>
+            <blockquote class="blockquote-reverse">
+                <footer>Publiée le {{ news.createdAt|date('d/m/Y') }}</footer>
+            </blockquote>
         </div>
         <div class="col-sm-8 col-xs-24">
             {% include 'default/block.html.twig' %}

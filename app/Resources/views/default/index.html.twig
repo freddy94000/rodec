@@ -6,8 +6,8 @@
             <h3>Actualité</h3>
             {% for new in pagination %}
                 <div>
-                    <a href="{{ path('new', { slug: new.slug }) }}">[{{ new.createdAt|date('d/m/Y') }}]</a>
-                    {{ new.content|truncate(150, true, '...')|raw }}
+                    <a href="{{ path('new', { slug: new.slug }) }}">[{{ new.createdAt|date('d/m/Y') }}] {{ new.title|truncate(35, true, '...') }}</a>
+                    {{ new.content|truncate(200, true, '...')|raw }}
                 </div>
             {% endfor %}
             <a class="btn btn-default" href="{{ path('news') }}">Plus d'actualité</a>
