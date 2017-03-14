@@ -28,7 +28,6 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Contact',
-            'csrf_protection' => false,
         ));
     }
 
