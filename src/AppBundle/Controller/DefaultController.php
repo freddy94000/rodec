@@ -68,8 +68,7 @@ class DefaultController extends Controller
             
             return $this->redirectToRoute('homepage');
         }
-        
-        
+
         return $this->render('default/index.html.twig', [
             'pagination' => $pagination,
             'page' => $page,
@@ -157,20 +156,23 @@ class DefaultController extends Controller
 
         $page = $pageRepository->findOneBy(['code' => $code]);
 
-        if (!$page) {
-            $node = $nodeRepository->findOneBy(['url' => $code]);
+        if ($page) {
+            return $this->render('default/page.html.twig', [
+                'page' => $page,
+                'form' => $form->createView(),
+                'lien' => $lienEspaceClient
+            ]);
+        }
+
+        $node = $nodeRepository->findOneBy(['url' => $code]);
+
+        if ($node) {
             return $this->render('default/node.html.twig', [
                 'node' => $node,
                 'form' => $form->createView(),
                 'lien' => $lienEspaceClient
             ]);
         }
-
-        return $this->render('default/page.html.twig', [
-            'page' => $page,
-            'form' => $form->createView(),
-            'lien' => $lienEspaceClient
-        ]);
     }
 
     /**
