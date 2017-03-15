@@ -18,7 +18,13 @@
                         <p>{{ news.content|truncate(500, true, '...')|raw }}</p>
                         <a class="btn btn-default" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
                     </div>
+                    {% if loop.index is even %}
+            </div>
+            <div class="row">
+                    {% endif %}
                 {% endfor %}
+            </div>
+            <div class="row">
                 <div class="col-sm-24 col-xs-24">
                     {{ knp_pagination_render(pagination) }}
                 </div>
