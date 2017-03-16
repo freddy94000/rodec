@@ -2,15 +2,20 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\Node;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
 
 class SiteMap
 {
 
+    /**
+     * @var Router
+     */
     protected $router;
 
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
     public function __construct(EntityManager $em, Router $router)
@@ -23,38 +28,53 @@ class SiteMap
     {
         $urls = [];
 
-        $urls[] = ['loc' => $this->router->generate('app_default_index', [], true)];
-        $urls[] = ['loc' => $this->router->generate('app_contact_brochure', [], true)];
-        $urls[] = ['loc' => $this->router->generate('app_guide_index', [], true)];
+        $urls[] = [
+            'loc' => $this->router->generate('homepage', [], Router::ABSOLUTE_URL),
+            'priority' => 1,
+        ];
 
-        $urls[] = ['loc' => $this->router->generate('app_job_index', [], true)];
-        $urls[] = ['loc' => $this->router->generate('app_job_prepare', [], true)];
-        $urls[] = ['loc' => $this->router->generate('app_job_list', [], true)];
-
-        $postes = $this->em->getRepository('AppBundle:Poste')->findAll();
-        foreach ($postes as $poste) {
-            $urls[] = ['loc' => $this->router->generate('app_job_fiche', ['slug' => $poste->getSlug()], true)];
-            $urls[] = ['loc' => $this->router->generate('app_job_prepare_poste', ['slug' => $poste->getSlug()], true)];
-            $urls[] = ['loc' => $this->router->generate('app_job_list_poste', ['slug' => $poste->getSlug()], true)];
-        }
-        $annonces = $this->em->getRepository('AppBundle:Annonce')->findAll();
-        foreach ($annonces as $annonce) {
-            $urls[] = ['loc' => $this->router->generate('app_job_annonce', ['annonceId' => $annonce->getId()], true)];
-            $urls[] = ['loc' => $this->router->generate('app_job_annonce_poste', [
-                'annonceId' => $annonce->getId(),
-                'slug' => $annonce->getPoste()->getSlug()
-            ], true)];
-        }
-
-        $offers = $this->em->getRepository('AppBundle:Offer')->findBy(['status' => 1]);
-        foreach ($offers as $offer) {
-            $urls[] = ['loc' => $this->router->generate('app_offer_index', ['slug' => $offer->getSlug()], true)];
-        }
-
-        $pages = $this->em->getRepository('KernixCMSBundle:Page')->findBy(['online' => 1]);
+        $pages = $this->em->getRepository('AppBundle:Page')->findAll();
         foreach ($pages as $page) {
-            $urls[] = ['loc' => $this->router->generate('kernix_cms_page_show', ['code' => $page->getCode()], true)];
+            $urls[] = [
+                'loc' => $this->router->generate('page', ['code' => $page->getCode()], Router::ABSOLUTE_URL),
+                'priority' => 0.9,
+            ];
         }
+
+        $news = $this->em->getRepository('AppBundle:News')->findAll();
+        foreach ($news as $new) {
+            $date = ($new->getUpdateAt()) ? $new->getUpdateAt() : $new->getCreatedAt();
+            $urls[] = [
+                'loc' => $this->router->generate('new', ['slug' => $new->getSlug()], Router::ABSOLUTE_URL),
+                'lastmod' => $date->format('Y-m-d'),
+                'priority' => 0.8,
+            ];
+        }
+
+        $urls[] = [
+            'loc' => $this->router->generate('news', [], Router::ABSOLUTE_URL),
+            'priority' => 0.7,
+        ];
+
+        $nodes = $this->em->getRepository('AppBundle:Node')->findAll();
+        foreach ($nodes as $node) {
+            if (!$node->getPage()) {
+                $urls[] = [
+                    'loc' => $this->router->generate('page', ['code' => $node->getUrl()], Router::ABSOLUTE_URL),
+                    'priority' => 0.6,
+                ];
+            }
+        }
+
+        $urls[] = [
+            'loc' => $this->router->generate('contact', [], Router::ABSOLUTE_URL),
+            'priority' => 0.5,
+        ];
+
+        $urls[] = [
+            'loc' => $this->router->generate('plan', [], Router::ABSOLUTE_URL),
+            'priority' => 0.4,
+        ];
 
         return $urls;
     }

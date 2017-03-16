@@ -12,3 +12,4 @@ Disallow: /app_dev.php/
 Disallow: /admin/
 Disallow: /phpmyadmin/
 Allow: /
+Sitemap: http://www.rodecconseils.fr//sitemap.xml

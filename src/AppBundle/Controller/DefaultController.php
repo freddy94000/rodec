@@ -234,4 +234,15 @@ class DefaultController extends Controller
             'nodes' => $nodes,
         ]);
     }
+
+    /**
+     * @Route("/sitemap.{_format}", name="sitemap", Requirements={"_format" = "xml"})
+     */
+    public function siteMapAction()
+    {
+        $urls = $this->get('app.service.site_map')->getUrls();
+
+        return $this->render('default/sitemap.xml.twig', ['urls' => $urls]);
+    }
+
 }
