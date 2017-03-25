@@ -7,19 +7,22 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class NewsAdmin extends AbstractAdmin
 {
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'createdAt',
+    ];
+
+    protected function configureRoutes(RouteCollection $collection)
     {
-        $datagridMapper
-            ->add('id')
-            ->add('title')
-            ->add('slug')
+        $collection
+            ->remove('export')
+            ->remove('show')
         ;
     }
 
@@ -29,11 +32,8 @@ class NewsAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('title')
-            ->add('slug')
-            ->add('createdAt')
-            ->add('updateAt')
+            ->add('publishAt', 'datetime', ['label' => 'Publié le', 'format' => 'd/m/Y H:i'])
+            ->add('title', null, ['label' => 'Titre'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -50,23 +50,9 @@ class NewsAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('content', CKEditorType::class)
-        ;
-    }
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->add('id')
-            ->add('title')
-            ->add('slug')
-            ->add('content')
-            ->add('createdAt')
-            ->add('updateAt')
+            ->add('publishAt', 'datetime', ['label' => 'Publié le'])
+            ->add('title', null, ['label' => 'Titre'])
+            ->add('content', CKEditorType::class, ['label' => 'Contenu'])
         ;
     }
 }

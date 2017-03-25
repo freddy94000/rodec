@@ -41,9 +41,9 @@ class SiteMap
             ];
         }
 
-        $news = $this->em->getRepository('AppBundle:News')->findAll();
+        $news = $this->em->getRepository('AppBundle:News')->getNews()->getResult();
         foreach ($news as $new) {
-            $date = ($new->getUpdateAt()) ? $new->getUpdateAt() : $new->getCreatedAt();
+            $date = ($new->getPublishAt()) ? $new->getPublishAt() : $new->getCreatedAt();
             $urls[] = [
                 'loc' => $this->router->generate('new', ['slug' => $new->getSlug()], Router::ABSOLUTE_URL),
                 'lastmod' => $date->format('Y-m-d'),

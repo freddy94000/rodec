@@ -16,18 +16,7 @@ class InformationAdmin extends AbstractAdmin
         $collection
             ->remove('create')
             ->remove('delete')
-        ;
-    }
-
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->remove('export')
         ;
     }
 
@@ -37,14 +26,12 @@ class InformationAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('dataKey', null, ['label' => 'Clé'])
+            ->add('dataValue', null, ['label' => 'Valeur'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
-                    'delete' => array(),
                 )
             ))
         ;
@@ -56,7 +43,8 @@ class InformationAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('dataValue')
+            ->add('dataKey', null, ['label' => 'Clé', 'disabled' => true])
+            ->add('dataValue', null, ['label' => 'Valeur'])
         ;
     }
 
@@ -66,9 +54,8 @@ class InformationAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('dataKey')
-            ->add('dataValue')
+            ->add('dataKey', null, ['label' => 'Clé'])
+            ->add('dataValue', null, ['label' => 'Valeur'])
         ;
     }
 }

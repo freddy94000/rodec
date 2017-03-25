@@ -54,14 +54,15 @@ class News
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updateAt", type="datetime", nullable=true)
+     * @ORM\Column(name="publishAt", type="datetime")
      */
-    private $updateAt;
+    private $publishAt;
 
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->publishAt = new \DateTime();
     }
 
     /**
@@ -170,28 +171,28 @@ class News
         return $this->createdAt;
     }
 
+
     /**
-     * Set updateAt
+     * Set publishAt
      *
-     * @param \DateTime $updateAt
+     * @param \DateTime $publishAt
      *
      * @return News
      */
-    public function setUpdateAt($updateAt)
+    public function setPublishAt($publishAt)
     {
-        $this->updateAt = $updateAt;
+        $this->publishAt = $publishAt;
 
         return $this;
     }
 
     /**
-     * Get updateAt
+     * Get publishAt
      *
      * @return \DateTime
      */
-    public function getUpdateAt()
+    public function getPublishAt()
     {
-        return $this->updateAt;
+        return $this->publishAt;
     }
 }
-

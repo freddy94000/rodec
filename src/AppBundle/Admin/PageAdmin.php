@@ -7,20 +7,17 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class PageAdmin extends AbstractAdmin
 {
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+
+    protected function configureRoutes(RouteCollection $collection)
     {
-        $datagridMapper
-            ->add('id')
-            ->add('code')
-            ->add('title')
-            ->add('content')
+        $collection
+            ->remove('show')
+            ->remove('export')
         ;
     }
 
@@ -30,9 +27,7 @@ class PageAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('code')
-            ->add('title')
+            ->add('title', null, ['label' => 'Titre'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -49,21 +44,8 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('content', CKEditorType::class)
-        ;
-    }
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->add('id')
-            ->add('code')
-            ->add('title')
-            ->add('content')
+            ->add('title', null, ['label' => 'Titre'])
+            ->add('content', CKEditorType::class, ['label' => 'Page'])
         ;
     }
 }

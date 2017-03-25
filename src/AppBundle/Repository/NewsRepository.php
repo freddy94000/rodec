@@ -15,9 +15,12 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('n');
 
-        $qb->orderBy('n.createdAt', 'DESC');
+        $qb->andWhere('n.publishAt <= :now')
+            ->setParameter('now', new \DateTime());
 
-        return $qb->getQuery()->getResult();
+        $qb->orderBy('n.publishAt', 'DESC');
+
+        return $qb->getQuery();
     }
 
 }

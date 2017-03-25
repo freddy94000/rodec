@@ -12,23 +12,18 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class NewsletterAdmin extends AbstractAdmin
 {
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'createdAt',
+    ];
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
             ->remove('edit')
-        ;
-    }
-
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('id')
-            ->add('subject')
-            ->add('content')
-            ->add('createdAt')
+            ->remove('remove')
+            ->remove('export')
         ;
     }
 
@@ -38,14 +33,11 @@ class NewsletterAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('subject')
-            ->add('createdAt')
+            ->add('createdAt', 'datetime', ['label' => 'Envoyé le', 'format' => 'd/m/Y H:i'])
+            ->add('subject', null, ['label' => 'Objet'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
                 )
             ))
         ;
@@ -57,8 +49,8 @@ class NewsletterAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('subject')
-            ->add('content', CKEditorType::class)
+            ->add('subject', null, ['label' => 'Objet'])
+            ->add('content', CKEditorType::class, ['label' => 'Contenu'])
         ;
     }
 
@@ -68,10 +60,9 @@ class NewsletterAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('subject')
-            ->add('content')
-            ->add('createdAt')
+            ->add('createdAt', 'datetime', ['label' => 'Envoyé le', 'format' => 'd/m/Y H:i'])
+            ->add('subject', null, ['label' => 'Objet'])
+            ->add('content', null, ['label' => 'Contenu'])
         ;
     }
 }

@@ -12,26 +12,18 @@ use Sonata\AdminBundle\Show\ShowMapper;
 class ContactAdmin extends AbstractAdmin
 {
 
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'createdAt',
+    ];
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
             ->remove('create')
             ->remove('edit')
-        ;
-    }
-
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('id')
-            ->add('name')
-            ->add('phoneNumber')
-            ->add('email')
-            ->add('message')
-            ->add('createdAt')
+            ->remove('export')
         ;
     }
 
@@ -41,15 +33,16 @@ class ContactAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('name')
-            ->add('phoneNumber')
-            ->add('email')
-            ->add('createdAt')
+            ->add('createdAt', 'datetime', [
+                'label' => 'Envoyé le',
+                'format' => 'd/m/Y H:i',
+            ])
+            ->add('name', null, ['label' => 'Prénom Nom'])
+            ->add('phoneNumber', null, ['label' => 'Numéro de téléphone'])
+            ->add('email', null, ['label' => 'Adresse email'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
-                    'edit' => array(),
                     'delete' => array(),
                 )
             ))
@@ -62,12 +55,14 @@ class ContactAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('name')
-            ->add('phoneNumber')
-            ->add('email')
-            ->add('message')
-            ->add('createdAt')
+            ->add('name', null, ['label' => 'Prénom Nom'])
+            ->add('phoneNumber', null, ['label' => 'Numéro de téléphone'])
+            ->add('email', null, ['label' => 'Adresse email'])
+            ->add('message', null, ['label' => 'Message'])
+            ->add('createdAt', 'datetime', [
+                'label' => 'Envoyé le',
+                'format' => 'd/m/Y H:i',
+            ])
         ;
     }
 }

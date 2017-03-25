@@ -6,22 +6,16 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class NodeAdmin extends AbstractAdmin
 {
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureRoutes(RouteCollection $collection)
     {
-        $datagridMapper
-            ->add('id')
-            ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+        $collection
+            ->remove('export')
+            ->remove('show')
         ;
     }
 
@@ -31,15 +25,13 @@ class NodeAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+            ->add('title', null, ['label' => 'Titre'])
+            ->add('nodeParent', null, ['label' => 'Noeud Parent'])
+            ->add('url', null, ['label' => 'Url'])
+            ->add('page', null, ['label' => 'Page associé'])
+            ->add('rank', null, ['label' => 'Rang'])
             ->add('_action', null, array(
                 'actions' => array(
-                    'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
@@ -53,26 +45,11 @@ class NodeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
-        ;
-    }
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->add('id')
-            ->add('title')
-            ->add('nodeParent')
-            ->add('url')
-            ->add('page')
-            ->add('rank')
+            ->add('title', null, ['label' => 'Titre'])
+            ->add('nodeParent', null, ['label' => 'Noeud Parent'])
+            ->add('url', null, ['label' => 'Url'])
+            ->add('page', null, ['label' => 'Page associé'])
+            ->add('rank', null, ['label' => 'Rang'])
         ;
     }
 }

@@ -110,11 +110,16 @@ class DefaultController extends Controller
     /**
      * @param News $news
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      *
      * @Route("/actualite/{slug}", name="new")
      */
     public function newsAction(News $news)
     {
+        if ($news->getPublishAt() > new \DateTime()) {
+            throw new \Exception("L'Actualité n'est pas encore disponible");
+        }
+
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
         $newsletter = new Email();
