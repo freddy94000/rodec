@@ -250,4 +250,20 @@ class DefaultController extends Controller
         return $this->render('default/sitemap.xml.twig', ['urls' => $urls]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function metaAction()
+    {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+
+        $description = $informationRepository->findOneBy(['dataKey' => 'meta-description']);
+        $keyword = $informationRepository->findOneBy(['dataKey' => 'meta-keyword']);
+
+        return $this->render('default/meta.html.twig', [
+            'description' => $description,
+            'keyword' => $keyword,
+        ]);
+    }
+
 }

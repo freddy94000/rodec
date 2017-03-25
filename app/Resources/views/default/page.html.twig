@@ -4,6 +4,17 @@
     {{ page.title }} - {{ parent() }}
 {% endblock %}
 
+{% block meta %}
+    {% if page.description %}
+        <meta name="description" content="{{ page.description }}">
+        {% if page.keyword %}
+            <meta name="keywords" content="{{ page.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <ol class="breadcrumb">
         <li><a href="{{ path('homepage') }}">Accueil</a></li>

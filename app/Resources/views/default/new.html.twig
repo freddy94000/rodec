@@ -4,6 +4,17 @@
     {{ news.title }} - {{ parent() }}
 {% endblock %}
 
+{% block meta %}
+    {% if news.description %}
+        <meta name="description" content="{{ news.description }}">
+        {% if news.keyword %}
+            <meta name="keywords" content="{{ news.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <ol class="breadcrumb">
         <li><a href="{{ path('homepage') }}">Accueil</a></li>
@@ -15,7 +26,7 @@
             <h1>{{ news.title }}</h1>
             <p>{{ news.content|raw }}</p>
             <blockquote class="blockquote-reverse">
-                <footer>Publiée le {{ news.createdAt|date('d/m/Y') }}</footer>
+                <footer>Publiée le {{ news.publishAt|date('d/m/Y') }}</footer>
             </blockquote>
         </div>
         <div class="col-sm-8 col-xs-24">

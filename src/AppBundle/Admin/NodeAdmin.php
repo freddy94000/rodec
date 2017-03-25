@@ -45,11 +45,17 @@ class NodeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title', null, ['label' => 'Titre'])
-            ->add('nodeParent', null, ['label' => 'Noeud Parent'])
-            ->add('url', null, ['label' => 'Url'])
-            ->add('page', null, ['label' => 'Page associé'])
-            ->add('rank', null, ['label' => 'Rang'])
+            ->with('Noeud')
+                ->add('title', null, ['label' => 'Titre'])
+                ->add('nodeParent', null, ['label' => 'Noeud Parent'])
+                ->add('url', null, ['label' => 'Url'])
+                ->add('page', null, ['label' => 'Page associé'])
+                ->add('rank', null, ['label' => 'Rang'])
+            ->end()
+            ->with('Seo')
+                ->add('description', 'textarea', ['label' => 'Meta Description'])
+                ->add('keyword', null, ['label' => 'Meta Keyword'])
+            ->end()
         ;
     }
 }

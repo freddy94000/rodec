@@ -44,8 +44,14 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title', null, ['label' => 'Titre'])
-            ->add('content', CKEditorType::class, ['label' => 'Page'])
+            ->with('Page')
+                ->add('title', null, ['label' => 'Titre'])
+                ->add('content', CKEditorType::class, ['label' => 'Page'])
+            ->end()
+            ->with('Seo')
+                ->add('description', 'textarea', ['label' => 'Meta Description'])
+                ->add('keyword', null, ['label' => 'Meta Keyword'])
+            ->end()
         ;
     }
 }

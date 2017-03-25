@@ -58,6 +58,20 @@ class Node
      */
     protected $page;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="keyword", type="string", length=255, nullable=true)
+     */
+    private $keyword;
+
 
     /**
      * Constructor
@@ -243,5 +257,53 @@ class Node
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Page
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set keyword
+     *
+     * @param string $keyword
+     *
+     * @return Page
+     */
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
+
+    /**
+     * Get keyword
+     *
+     * @return string
+     */
+    public function getKeyword()
+    {
+        return $this->keyword;
     }
 }

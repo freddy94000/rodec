@@ -50,9 +50,15 @@ class NewsAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('publishAt', 'datetime', ['label' => 'Publié le'])
-            ->add('title', null, ['label' => 'Titre'])
-            ->add('content', CKEditorType::class, ['label' => 'Contenu'])
+            ->with('Actualité')
+                ->add('publishAt', 'datetime', ['label' => 'Publié le'])
+                ->add('title', null, ['label' => 'Titre'])
+                ->add('content', CKEditorType::class, ['label' => 'Contenu'])
+            ->end()
+            ->with('Seo')
+                ->add('description', 'textarea', ['label' => 'Meta Description'])
+                ->add('keyword', null, ['label' => 'Meta Keyword'])
+            ->end()
         ;
     }
 }

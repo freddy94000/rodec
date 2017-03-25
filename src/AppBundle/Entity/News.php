@@ -58,6 +58,20 @@ class News
      */
     private $publishAt;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="keyword", type="string", length=255, nullable=true)
+     */
+    private $keyword;
+
 
     public function __construct()
     {
@@ -194,5 +208,53 @@ class News
     public function getPublishAt()
     {
         return $this->publishAt;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return News
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set keyword
+     *
+     * @param string $keyword
+     *
+     * @return News
+     */
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
+
+    /**
+     * Get keyword
+     *
+     * @return string
+     */
+    public function getKeyword()
+    {
+        return $this->keyword;
     }
 }
