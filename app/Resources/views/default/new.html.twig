@@ -24,6 +24,11 @@
     <div class="row">
         <div class="col-sm-16 col-xs-24">
             <h1>{{ news.title }}</h1>
+            {% if news.image %}
+                <div class="image-page">
+                    <img src="{{ asset('images/' ~ news.image.imageName) }}"/>
+                </div>
+            {% endif %}
             <p>{{ news.content|raw }}</p>
             <blockquote class="blockquote-reverse">
                 <footer>Publiée le {{ news.publishAt|date('d/m/Y') }}</footer>

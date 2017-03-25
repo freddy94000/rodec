@@ -4,6 +4,14 @@
 @background-color: #ece9e2;
 @body-bg: @primary-blue;
 
+html, body {
+  height: 100%;
+}
+
+.body-container {
+  min-height: 100%;
+}
+
 .navbar {
   border: inherit;
   z-index: 1;
@@ -123,6 +131,7 @@
     }
   }
 }
+
 #map {
   font-size: 12px;
 
@@ -150,7 +159,29 @@
   }
 }
 
+.image-home, .image-node {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
 
+  img {
+    width: 100%;
+    margin: 15px auto 5px;
+    border: 5px solid white;
+  }
+}
+
+.image-news-home, .image-page {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    margin: 15px auto 5px;
+    border: 5px solid white;
+  }
+}
 
 @media (min-width: 768px) and (max-width: 992px) {
   .navbar-collapse {

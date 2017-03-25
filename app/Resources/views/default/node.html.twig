@@ -31,6 +31,11 @@
                     {% if nodeChild.page %}
                         <div class="col-sm-12 col-xs-24">
                             <h3>{{ nodeChild.title|truncate(10, true, '...') }}</h3>
+                            {% if nodeChild.page.image %}
+                                <div class="image-node">
+                                    <img src="{{ asset('images/' ~ nodeChild.page.image.imageName) }}"/>
+                                </div>
+                            {% endif %}
                             <p>{{ nodeChild.page.content|truncate(500, true, '...')|raw }}</p>
                             <a class="btn btn-default" href="{{ path('page', { 'code': nodeChild.page.code }) }}">Voir la suite</a>
                         </div>
@@ -44,6 +49,11 @@
                         {% for nodeChildTwo in nodeChild.nodeChilds %}
                             <div class="col-sm-12 col-xs-24">
                                 <h3>{{ nodeChildTwo.title|truncate(10, true, '...') }}</h3>
+                                {% if nodeChildTwo.page.image %}
+                                    <div class="image-node">
+                                        <img src="{{ asset('images/' ~ nodeChildTwo.page.image.imageName) }}"/>
+                                    </div>
+                                {% endif %}
                                 <p>{{ nodeChildTwo.page.content|truncate(500, true, '...')|raw }}</p>
                                 <a class="btn btn-default" href="{{ path('page', { 'code': nodeChildTwo.page.code }) }}">Voir la suite</a>
                             </div>

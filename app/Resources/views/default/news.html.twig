@@ -15,6 +15,11 @@
                 {% for news in pagination %}
                     <div class="col-sm-12 col-xs-24">
                         <h3>{{ news.title|truncate(20, true, '...') }}</h3>
+                        {% if news.image %}
+                            <div class="image-node">
+                                <img src="{{ asset('images/' ~ news.image.imageName) }}"/>
+                            </div>
+                        {% endif %}
                         <p>{{ news.content|truncate(500, true, '...')|raw }}</p>
                         <a class="btn btn-default" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
                     </div>

@@ -38,6 +38,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'VichUploaderBundle:Form:fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -50,7 +52,7 @@ doctrine:
         password: "%database_password%"
         charset:  UTF8
         types:
-            json: Sonata\Doctrine\Types\JsonType
+            json: Doctrine\DBAL\Types\JsonArrayType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
@@ -148,3 +150,16 @@ assetic:
 sonata_admin:
     title:  'Rodec Conseils'
     title_logo: logo-admin.jpg
+
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        image:
+            uri_prefix:         /images
+            upload_destination: '%kernel.root_dir%/../web/images'
+
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid

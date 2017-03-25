@@ -72,6 +72,11 @@ class News
      */
     private $keyword;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist", "remove"})
+     */
+    private $image;
+
 
     public function __construct()
     {
@@ -256,5 +261,29 @@ class News
     public function getKeyword()
     {
         return $this->keyword;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return News
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

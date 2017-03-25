@@ -54,6 +54,7 @@ class NewsAdmin extends AbstractAdmin
                 ->add('publishAt', 'datetime', ['label' => 'Publié le'])
                 ->add('title', null, ['label' => 'Titre'])
                 ->add('content', CKEditorType::class, ['label' => 'Contenu'])
+                ->add('image')
             ->end()
             ->with('Seo')
                 ->add('description', 'textarea', ['label' => 'Meta Description'])

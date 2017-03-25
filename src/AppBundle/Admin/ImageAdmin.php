@@ -2,24 +2,15 @@
 
 namespace AppBundle\Admin;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class PageAdmin extends AbstractAdmin
+class ImageAdmin extends AbstractAdmin
 {
-
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection
-            ->remove('show')
-            ->remove('export')
-        ;
-    }
 
     /**
      * @param ListMapper $listMapper
@@ -27,7 +18,7 @@ class PageAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', null, ['label' => 'Titre'])
+            ->add('imageName')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -44,15 +35,22 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Page')
-                ->add('title', null, ['label' => 'Titre'])
-                ->add('content', CKEditorType::class, ['label' => 'Page'])
-                ->add('image')
-            ->end()
-            ->with('Seo')
-                ->add('description', 'textarea', ['label' => 'Meta Description'])
-                ->add('keyword', null, ['label' => 'Meta Keyword'])
-            ->end()
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_link' => false,
+                'label' => 'Image'
+            ])
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('imageName')
         ;
     }
 }

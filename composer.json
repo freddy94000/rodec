@@ -30,7 +30,8 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "twbs/bootstrap": "^3.3",
         "components/jquery": "1.12.4",
-        "symfony/assetic-bundle": "^2.8"
+        "symfony/assetic-bundle": "^2.8",
+        "vich/uploader-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

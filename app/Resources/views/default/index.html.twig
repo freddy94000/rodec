@@ -6,15 +6,25 @@
             <h3>Actualité</h3>
             {% for new in pagination %}
                 <div>
+                    {% if new.image %}
+                        <div class="image-news-home">
+                            <img src="{{ asset('images/' ~ new.image.imageName) }}"/>
+                        </div>
+                    {% endif %}
                     <a href="{{ path('new', { slug: new.slug }) }}">[{{ new.publishAt|date('d/m/Y') }}] {{ new.title|truncate(35, true, '...') }}</a>
                     {{ new.content|truncate(200, true, '...')|raw }}
                 </div>
             {% endfor %}
-            <a class="btn btn-default" href="{{ path('news') }}">Plus d'actualité</a>
+            <a style="float: right;" class="btn btn-default" href="{{ path('news') }}">Plus d'actualité</a>
         </div>
         <div class="col-sm-8 col-xs-24">
             <h3>{{ page.title }}</h3>
-            <p>{{ page.content|truncate(800, true, '...')|raw }}</p>
+            {% if page.image %}
+                <div class="image-home">
+                    <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                </div>
+            {% endif %}
+            <p>{{ page.content|truncate(1200, true, '...')|raw }}</p>
             <a class="btn btn-default" href="{{ path('page', { 'code': page.code }) }}">Voir la suite</a>
         </div>
         <div class="col-sm-8 col-xs-24">
