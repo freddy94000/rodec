@@ -95,5 +95,10 @@ class Image
     {
         return ($this->imageName) ?: '';
     }
+    
+    public function getWebPath()
+    {
+        return ($this->getImageName()) ? 'images/' . $this->getImageName() : null;
+    }
 }
 
