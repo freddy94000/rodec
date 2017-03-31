@@ -14,21 +14,21 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Route("/", name="default")
-     */
-    public function defaultAction()
-    {
-        return $this->render('default/default.html.twig');
-    }
+//    /**
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     *
+//     * @Route("/", name="default")
+//     */
+//    public function defaultAction()
+//    {
+//        return $this->render('default/default.html.twig');
+//    }
 
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/accueil", name="homepage")
+     * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
     {

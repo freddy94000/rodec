@@ -22,7 +22,7 @@
         <li class="active">{{ news.title }}</li>
     </ol>
     <div class="row">
-        <div class="col-sm-16 col-xs-24">
+        <div class="col-sm-17 col-xs-24">
             <h1>{{ news.title }}</h1>
             {% if news.image %}
                 <div class="image-page">
@@ -34,7 +34,7 @@
                 <footer>Publiée le {{ news.publishAt|date('d/m/Y') }}</footer>
             </blockquote>
         </div>
-        <div class="col-sm-8 col-xs-24">
+        <div class="col-sm-7 col-xs-24">
             {% include 'default/block.html.twig' %}
         </div>
     </div>
