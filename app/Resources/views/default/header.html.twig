@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default">
-    <div class="container">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -7,47 +7,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('homepage') }}">
-                <img alt="Logo" src="{{ asset('logo.png') }}">
-            </a>
+            <a class="navbar-brand" href="{{ path('homepage') }}">Rodec Conseils</a>
         </div>
 
         <div class="collapse navbar-collapse" id="menu">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 {% for node in nodes %}
-                    {% if node.page %}
-                        {% set url = path('page', { 'code': node.page.code }) %}
-                    {% elseif node.nodeChilds|length > 0 %}
-                        {% set url = path('page', { 'code': node.url }) %}
-                    {% elseif node.url %}
+                    {#{% if node.page %}#}
+                        {#{% set url = path('page', { 'code': node.page.code }) %}#}
+                    {#{% elseif node.nodeChilds|length > 0 %}#}
+                        {#{% set url = path('page', { 'code': node.url }) %}#}
+                    {% if node.url != 'contact' %}
                         {% set url = path(node.url) %}
                     {% else %}
-                        {% set url = '#' %}
+                        {% set url = '#contact' %}
                     {% endif %}
-                    {% if node.nodeChilds|length > 0 %}
-                        <li class="dropdown">
-                            <a href="{{ url }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                {{ node.title }} <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% for nodeChild in node.nodeChilds %}
-                                    {% if nodeChild.page %}
-                                        {% set urlChild = path('page', { 'code': nodeChild.page.code }) %}
-                                    {% elseif nodeChild.url %}
-                                        {% set urlChild = path('page', {'code': nodeChild.url}) %}
-                                    {% else %}
-                                        {% set urlChild = '#' %}
-                                    {% endif %}
-                                    <li><a href="{{ urlChild }}">{{ nodeChild.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li><a href="{{ url }}">{{ node.title }}</a></li>
-                    {% endif %}
-                    {% if not loop.last %}
-                        <li class="separator"></li>
-                    {% endif %}
+                    <li><a href="{{ url }}">{{ node.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>

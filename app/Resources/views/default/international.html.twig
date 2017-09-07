@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {% if node.description %}
+        <meta name="description" content="{{ node.description }}">
+        {% if node.keyword %}
+            <meta name="keywords" content="{{ node.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ node.title }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <header style="
+            background: url('{{ asset('images/' ~ node.image.imageName) }}') center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            ">
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">{{ node.title }}</h1>
+                <hr>
+                <p>{{ node.accroche }}</p>
+            </div>
+        </div>
+    </header>
+
+    {% for nodeChild in node.nodeChilds %}
+        {% set page = nodeChild.page %}
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-heading text-center">{{ page.title }}</h2>
+                        {% if page.image %}
+                            <div class="image-page">
+                                <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                            </div>
+                        {% endif %}
+                        {{ page.content|raw }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        (function($) {
+            "use strict";
+
+            $('body').scrollspy({
+                target: '.navbar-fixed-top',
+                offset: 51
+            });
+
+            $('#mainNav').affix({
+                offset: {
+                    top: 100
+                }
+            })
+        })(jQuery);
+    </script>
+{% endblock %}

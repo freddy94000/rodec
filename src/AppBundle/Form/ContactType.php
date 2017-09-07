@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ContactType extends AbstractType
 {
@@ -16,7 +17,7 @@ class ContactType extends AbstractType
         $builder
             ->add('name', null, ['attr' => ['placeholder' => 'Prénom NOM *', 'class' => 'form-control']])
             ->add('phoneNumber', null, ['attr' => ['placeholder' => 'Téléphone *', 'class' => 'form-control']])
-            ->add('email', null, ['attr' => ['placeholder' => 'Email *', 'class' => 'form-control']])
+            ->add('email', EmailType::class, ['attr' => ['placeholder' => 'Email *', 'class' => 'form-control']])
             ->add('message', null, ['attr' => ['placeholder' => 'Votre message *', 'class' => 'form-control', 'rows' => 5]])
         ;
     }

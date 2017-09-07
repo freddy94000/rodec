@@ -9,32 +9,17 @@
         {% endblock %}
         <title>{% block title %}Rodec Conseils{% endblock %}</title>
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('lib/components-font-awesome/css/font-awesome.min.css') }}" />
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+            <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
             <link rel="stylesheet" href="{{ asset('lib/bootstrap/dist/css/bootstrap.css') }}" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {{ render(controller('AppBundle:Default:header')) }}
-        <div class="body-container">
-            <div class="container">
-                {% for flash_message in app.session.flashBag.get('notice') %}
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{ flash_message }}
-                    </div>
-                {% endfor %}
-                {% block body %}{% endblock %}
-            </div>
-        </div>
-        <footer class="footer">
-            <div class="container">
-                <p class="text-muted">
-                    © 2017 Rodec Conseils. Tous droits réservés.<br />
-                    <a href="{{ path('page', { 'code': 'mention-legale' }) }}">Mention légale</a>
-                    &nbsp; &nbsp;| &nbsp; &nbsp;<a href="{{ path('plan') }}">Plan du site</a>
-                </p>
-            </div>
-        </footer>
+        {% block body %}{% endblock %}
+        {{ render(controller('AppBundle:Default:footer')) }}
         {% block javascripts %}
             <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
             <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {% if node.description %}
+        <meta name="description" content="{{ node.description }}">
+        {% if node.keyword %}
+            <meta name="keywords" content="{{ node.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <header style="
+            background: url('{{ asset('images/' ~ node.image.imageName) }}') center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+        ">
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">Rodec Conseils</h1>
+                <hr>
+                <p>{{ node.accroche }}</p>
+            </div>
+        </div>
+    </header>
+
+    {% for nodeChild in node.nodeChilds %}
+        {% set page = nodeChild.page %}
+        <section>
+            <div class="container">
+                {% if loop.first %}
+                    {% for flash_message in app.session.flashBag.get('notice') %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+                    {% for flash_message in app.session.flashBag.get('error') %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-heading text-center">{{ page.title }}</h2>
+                        {% if page.image %}
+                            <div class="image-page">
+                                <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                            </div>
+                        {% endif %}
+                        {{ page.content|raw }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+    <section class="interlocuteurs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-heading text-center">Vos interlocuteurs</h2>
+                    <div class="row">
+                        {% for team in teams %}
+                            <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-md-4">
+                                <div class="item-team">
+                                    <div class="img-team">
+                                        {% if team.image %}
+                                            <img src="{{ asset('images/' ~ team.image.imageName) }}">
+                                        {% else %}
+                                            <img src="{{ asset('avatar.png') }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="team-info">
+                                        <h3>{{ team.firstname }} {{ team.lastname }}</h3>
+                                        <span>{{ team.poste }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-news-home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-heading text-center">Actualités</h2>
+                    <div class="row">
+                        {% for news in pagination %}
+                            <div class="col-md-6">
+                                <div class="news-element">
+                                    <div class="image-node">
+                                        {% if news.image %}
+                                            <img src="{{ asset('images/' ~ news.image.imageName) }}"/>
+                                        {% else %}
+                                            <img src="{{ asset('default_picture.jpg') }}"/>
+                                        {% endif %}
+                                    </div>
+                                    <div class="info-news">
+                                        <p class="date">{{ news.publishAt|date('d/m/Y') }}</p>
+                                        <h3><a href="{{ path('new', { slug: news.slug }) }}">{{ news.title|truncate(20, true, '...') }}</a></h3>
+                                        <div class="content">{{ news.content|truncate(200, true, '...')|raw }}</div>
+                                        <a class="btn btn-default" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        (function($) {
+            "use strict";
+
+            $('body').scrollspy({
+                target: '.navbar-fixed-top',
+                offset: 51
+            });
+
+            $('#mainNav').affix({
+                offset: {
+                    top: 100
+                }
+            })
+        })(jQuery);
+    </script>
+{% endblock %}

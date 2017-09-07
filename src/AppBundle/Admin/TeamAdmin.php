@@ -2,24 +2,14 @@
 
 namespace AppBundle\Admin;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class PageAdmin extends AbstractAdmin
+class TeamAdmin extends AbstractAdmin
 {
-
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection
-            ->remove('show')
-            ->remove('export')
-        ;
-    }
 
     /**
      * @param ListMapper $listMapper
@@ -27,7 +17,9 @@ class PageAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', null, ['label' => 'Titre'])
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('poste', null, ['label' => 'Poste'])
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -44,11 +36,22 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Page')
-                ->add('title', null, ['label' => 'Titre'])
-                ->add('content', CKEditorType::class, ['label' => 'Page'])
-                ->add('image')
-            ->end()
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('poste', null, ['label' => 'Poste'])
+            ->add('image')
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('poste', null, ['label' => 'Poste'])
         ;
     }
 }

@@ -72,6 +72,18 @@ class Node
      */
     private $keyword;
 
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="accroche", type="string", length=255, nullable=true)
+     */
+    private $accroche;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist", "remove"})
+     */
+    private $image;
+
 
     /**
      * Constructor
@@ -86,7 +98,7 @@ class Node
      */
     public function __toString()
     {
-        return $this->title;
+        return ($this->title) ?: '';
     }
 
     /**
@@ -305,5 +317,53 @@ class Node
     public function getKeyword()
     {
         return $this->keyword;
+    }
+
+    /**
+     * Set accroche
+     *
+     * @param string $accroche
+     *
+     * @return Node
+     */
+    public function setAccroche($accroche)
+    {
+        $this->accroche = $accroche;
+
+        return $this;
+    }
+
+    /**
+     * Get accroche
+     *
+     * @return string
+     */
+    public function getAccroche()
+    {
+        return $this->accroche;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Node
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

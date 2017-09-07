@@ -34,5 +34,5 @@ gulp.task('less', function() {
 
 // Observation des modifications
 gulp.task('watch', function () {
-    gulp.watch(['./less/bootstrap.less', './less/style.less'], ['less']);
+    gulp.watch(['./less/bootstrap.less', './less/style.less', './less/mixins.less', './less/variables.less'], ['less']);
 });

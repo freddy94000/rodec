@@ -57,7 +57,7 @@ class NewsAdmin extends AbstractAdmin
                 ->add('image')
             ->end()
             ->with('Seo')
-                ->add('description', 'textarea', ['label' => 'Meta Description'])
+                ->add('description', 'textarea', ['label' => 'Meta Description', 'required' => false])
                 ->add('keyword', null, ['label' => 'Meta Keyword'])
             ->end()
         ;

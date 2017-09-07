@@ -2,7 +2,8 @@
   "name": "rodec",
   "private": true,
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "4.7.0"
   },
   "overrides": {
     "bootstrap": {
@@ -10,6 +11,12 @@
         "dist/fonts/*",
         "dist/js/*",
         "js/*"
+      ]
+    },
+    "components-font-awesome": {
+      "main": [
+        "fonts/*",
+        "css/font-awesome.min.css"
       ]
     },
     "jquery": {

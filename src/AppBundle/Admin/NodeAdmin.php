@@ -47,13 +47,15 @@ class NodeAdmin extends AbstractAdmin
         $formMapper
             ->with('Noeud')
                 ->add('title', null, ['label' => 'Titre'])
+                ->add('accroche', 'textarea', ['label' => 'Accroche', 'required' => false])
                 ->add('nodeParent', null, ['label' => 'Noeud Parent'])
                 ->add('url', null, ['label' => 'Url'])
                 ->add('page', null, ['label' => 'Page associé'])
                 ->add('rank', null, ['label' => 'Rang'])
+                ->add('image')
             ->end()
             ->with('Seo')
-                ->add('description', 'textarea', ['label' => 'Meta Description'])
+                ->add('description', 'textarea', ['label' => 'Meta Description', 'required' => false])
                 ->add('keyword', null, ['label' => 'Meta Keyword'])
             ->end()
         ;
