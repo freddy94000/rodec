@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Team
  *
  * @ORM\Table(name="team")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
+ * @Vich\Uploadable
  */
 class Team
 {
@@ -41,11 +44,25 @@ class Team
      * @ORM\Column(name="poste", type="string", length=255)
      */
     private $poste;
-    
+
     /**
-     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist", "remove"})
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="image", fileNameProperty="imageName")
      */
-    private $image;
+    protected $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
+     */
+    protected $imageName;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
 
     /**
@@ -129,29 +146,50 @@ class Team
     {
         return $this->poste;
     }
-    
+
     /**
-     * Set image
+     * Set imageName
      *
-     * @param \AppBundle\Entity\Image $image
+     * @param string $imageName
      *
-     * @return Team
+     * @return $this
      */
-    public function setImage(Image $image = null)
+    public function setImageName($imageName)
     {
-        $this->image = $image;
+        $this->imageName = $imageName;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get imageName
      *
-     * @return \AppBundle\Entity\Team
+     * @return string
      */
-    public function getImage()
+    public function getImageName()
     {
-        return $this->image;
+        return $this->imageName;
     }
-}
 
+    /**
+     * @param File|null $image
+     * @return $this
+     */
+    public function setImageFile($image = null)
+    {
+        $this->imageFile = $image;
+
+        $this->updatedAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+    
+}

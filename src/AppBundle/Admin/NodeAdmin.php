@@ -44,6 +44,14 @@ class NodeAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $subject = $this->getSubject();
+
+        $imageOptions = ['label' => 'Image', 'required' => false];
+
+        if ($subject->getImageName()) {
+            $imageOptions['help'] = '<img src="/images/' . $subject->getImageName() . '" style="max-height: 200px; max-width: 200px;" />';
+        }
+
         $formMapper
             ->with('Noeud')
                 ->add('title', null, ['label' => 'Titre'])
@@ -52,7 +60,7 @@ class NodeAdmin extends AbstractAdmin
                 ->add('url', null, ['label' => 'Url'])
                 ->add('page', null, ['label' => 'Page associé'])
                 ->add('rank', null, ['label' => 'Rang'])
-                ->add('image')
+                ->add('imageFile', 'Vich\UploaderBundle\Form\Type\VichFileType', $imageOptions)
             ->end()
             ->with('Seo')
                 ->add('description', 'textarea', ['label' => 'Meta Description', 'required' => false])

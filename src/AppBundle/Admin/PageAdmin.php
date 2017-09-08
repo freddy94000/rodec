@@ -43,11 +43,19 @@ class PageAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $subject = $this->getSubject();
+
+        $imageOptions = ['label' => 'Image', 'required' => false];
+
+        if ($subject->getImageName()) {
+            $imageOptions['help'] = '<img src="/images/' . $subject->getImageName() . '" style="max-height: 200px; max-width: 200px;" />';
+        }
+
         $formMapper
             ->with('Page')
                 ->add('title', null, ['label' => 'Titre'])
                 ->add('content', CKEditorType::class, ['label' => 'Page'])
-                ->add('image')
+                ->add('imageFile', 'Vich\UploaderBundle\Form\Type\VichFileType', $imageOptions)
             ->end()
         ;
     }

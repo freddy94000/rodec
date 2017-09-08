@@ -2,15 +2,17 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Page
  *
  * @ORM\Table(name="page")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PageRepository")
+ * @Vich\Uploadable
  */
 class Page
 {
@@ -51,9 +53,23 @@ class Page
     protected $node;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Image", cascade={"persist", "remove"})
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="image", fileNameProperty="imageName")
      */
-    private $image;
+    protected $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
+     */
+    protected $imageName;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
 
     /**
@@ -171,26 +187,47 @@ class Page
     }
 
     /**
-     * Set image
+     * Set imageName
      *
-     * @param \AppBundle\Entity\Image $image
+     * @param string $imageName
      *
-     * @return Page
+     * @return $this
      */
-    public function setImage(Image $image = null)
+    public function setImageName($imageName)
     {
-        $this->image = $image;
+        $this->imageName = $imageName;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get imageName
      *
-     * @return \AppBundle\Entity\Image
+     * @return string
      */
-    public function getImage()
+    public function getImageName()
     {
-        return $this->image;
+        return $this->imageName;
+    }
+
+    /**
+     * @param File|null $image
+     * @return $this
+     */
+    public function setImageFile($image = null)
+    {
+        $this->imageFile = $image;
+
+        $this->updatedAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 }

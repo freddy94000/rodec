@@ -21,9 +21,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="section-heading text-center">{{ news.title }}</h2>
-                    {% if news.image %}
+                    {% if news.imageName %}
                         <div class="image-page">
-                            <img src="{{ asset('images/' ~ news.image.imageName) }}"/>
+                            <img src="{{ asset('images/' ~ news.imageName) }}"/>
                         </div>
                     {% endif %}
                     {{ news.content|raw }}

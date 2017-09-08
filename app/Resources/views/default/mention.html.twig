@@ -10,9 +10,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="section-heading text-center">{{ page.title }}</h2>
-                    {% if page.image %}
+                    {% if page.imageName %}
                         <div class="image-page">
-                            <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                            <img src="{{ asset('images/' ~ page.imageName) }}"/>
                         </div>
                     {% endif %}
                     {{ page.content|raw }}

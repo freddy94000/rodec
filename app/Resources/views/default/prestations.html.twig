@@ -17,7 +17,7 @@
 
 {% block body %}
     <header style="
-            background: url('{{ asset('images/' ~ node.image.imageName) }}') center;
+            background: url('{{ asset('images/' ~ node.imageName) }}') center;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             background-size: cover;
@@ -41,9 +41,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h2 class="section-heading text-center">{{ page.title }}</h2>
-                            {% if page.image %}
+                            {% if page.imageName %}
                                 <div class="image-page">
-                                    <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                                    <img src="{{ asset('images/' ~ page.imageName) }}"/>
                                 </div>
                             {% endif %}
                             {{ page.content|raw }}
@@ -74,9 +74,9 @@
                                             </h4>
                                         </div>
                                         <div id="collapse{{ nodeIndex ~ loop.index }}" class="panel-collapse collapse {% if loop.first %}in{% endif %}" role="tabpanel" aria-labelledby="heading{{ nodeIndex ~ loop.index }}">
-                                            {% if page.image %}
+                                            {% if page.imageName %}
                                                 <div class="image-page">
-                                                    <img src="{{ asset('images/' ~ page.image.imageName) }}"/>
+                                                    <img src="{{ asset('images/' ~ page.imageName) }}"/>
                                                 </div>
                                             {% endif %}
                                             <div class="panel-body">{{ page.content|raw }}</div>

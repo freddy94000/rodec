@@ -25,9 +25,9 @@
                         {% for news in pagination %}
                             <div class="col-md-4 col-sm-6">
                                 <div class="news-element">
-                                    {% if news.image %}
+                                    {% if news.imageName %}
                                         <div class="image-node">
-                                            <img src="{{ asset('images/' ~ news.image.imageName) }}"/>
+                                            <img src="{{ asset('images/' ~ news.imageName) }}"/>
                                         </div>
                                     {% else %}
                                         <div class="image-node">
