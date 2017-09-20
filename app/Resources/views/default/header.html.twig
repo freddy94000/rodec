@@ -17,12 +17,16 @@
                         {#{% set url = path('page', { 'code': node.page.code }) %}#}
                     {#{% elseif node.nodeChilds|length > 0 %}#}
                         {#{% set url = path('page', { 'code': node.url }) %}#}
-                    {% if node.url != 'contact' %}
+                    {% if node.url != 'contact' and node.url != 'quadra' %}
                         {% set url = path(node.url) %}
-                    {% else %}
+                        <li><a href="{{ url }}">{{ node.title }}</a></li>
+                    {% elseif node.url == 'contact' %}
                         {% set url = '#contact' %}
+                        <li><a href="{{ url }}">{{ node.title }}</a></li>
+                    {% elseif node.url == 'quadra' %}
+                        {% set url = informationRepository.findOneByDataKey('lien-espace-client').dataValue() %}
+                        <li><a href="{{ url }}" target="_blank">{{ node.title }}</a></li>
                     {% endif %}
-                    <li><a href="{{ url }}">{{ node.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>

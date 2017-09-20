@@ -286,11 +286,15 @@ class DefaultController extends Controller
      */
     public function headerAction()
     {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
 
         $nodes = $nodeRepository->getNodesParent();
 
-        return $this->render('default/header.html.twig', ['nodes' => $nodes]);
+        return $this->render('default/header.html.twig', [
+            'nodes' => $nodes,
+            'informationRepository' => $informationRepository,
+        ]);
     }
 
     /**
