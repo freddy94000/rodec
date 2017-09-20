@@ -19,6 +19,11 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/", name="homepage")
+     * @Route("/contact", name="contact")
+     * @Route("/le-cabinet", name="lecabinet")
+     * @Route("/qui-sommes-nous", name="quisommesnous")
+     * @Route("/nos-valeurs", name="nosvaleurs")
+     * @Route("/vos-interlocuteurs", name="vosinterlocuteurs")
      */
     public function homeAction(Request $request)
     {
@@ -99,6 +104,8 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/accompagnement-international", name="accompagnement-international")
+     * @Route("/pour-qui", name="pourqui")
+     * @Route("/comment", name="comment")
      */
     public function internationalAction(Request $request)
     {
@@ -115,6 +122,19 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/nos-prestations", name="nos-prestations")
+     * @Route("/comptabilite", name="comptabilite")
+     * @Route("/travaux-courants-de-comptabilite", name="travauxcourants")
+     * @Route("/conseil-adapte", name="conseiladapte")
+     * @Route("/controle-de-gestion", name="controlegestion")
+     * @Route("/droit-du-travail-et-administration-du-personnel", name="administrationdupersonnel")
+     * @Route("/gestion-courante-du-personnel", name="gestioncourante")
+     * @Route("/conseil-specifique", name="conseilspecifique")
+     * @Route("/fiscalite-d-entreprise", name="fiscalite")
+     * @Route("/conseil-fiscal", name="fiscal")
+     * @Route("/accompagnement-fiscal-specifique", name="specifique")
+     * @Route("/fiscalite-des-particuliers", name="particuliers")
+     * @Route("/creation-d-entreprise", name="entreprise")
+     * @Route("/remplacement", name="remplacement")
      */
     public function prestationsAction(Request $request)
     {

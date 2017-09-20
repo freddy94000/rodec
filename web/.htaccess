@@ -1,24 +1,3 @@
-Redirect 301 /contact www.rodecconseils.fr
-Redirect 301 /le-cabinet www.rodecconseils.fr
-Redirect 301 /qui-sommes-nous www.rodecconseils.fr
-Redirect 301 /nos-valeurs www.rodecconseils.fr
-Redirect 301 /vos-interlocuteurs www.rodecconseils.fr
-Redirect 301 /pour-qui www.rodecconseils.fr/accompagnement-international
-Redirect 301 /comment www.rodecconseils.fr/accompagnement-international
-Redirect 301 /comptabilite www.rodecconseils.fr/nos-prestations
-Redirect 301 /travaux-courants-de-comptabilite www.rodecconseils.fr/nos-prestations
-Redirect 301 /conseil-adapte www.rodecconseils.fr/nos-prestations
-Redirect 301 /controle-de-gestion www.rodecconseils.fr/nos-prestations
-Redirect 301 /droit-du-travail-et-administration-du-personnel www.rodecconseils.fr/nos-prestations
-Redirect 301 /gestion-courante-du-personnel www.rodecconseils.fr/nos-prestations
-Redirect 301 /conseil-specifique www.rodecconseils.fr/nos-prestations
-Redirect 301 /fiscalite-d-entreprise www.rodecconseils.fr/nos-prestations
-Redirect 301 /conseil-fiscal www.rodecconseils.fr/nos-prestations
-Redirect 301 /accompagnement-fiscal-specifique www.rodecconseils.fr/nos-prestations
-Redirect 301 /fiscalite-des-particuliers www.rodecconseils.fr/nos-prestations
-Redirect 301 /creation-d-entreprise www.rodecconseils.fr/nos-prestations
-Redirect 301 /remplacement www.rodecconseils.fr/nos-prestations
-
 # Use the front controller as index file. It serves as a fallback solution when
 # every other rewrite/redirect fails (e.g. in an aliased environment without
 # mod_rewrite). Additionally, this reduces the matching process for the
