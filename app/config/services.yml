@@ -34,12 +34,6 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Contenu, label: Actualités }
 
-    app.admin.image:
-        class: AppBundle\Admin\ImageAdmin
-        arguments: [~, AppBundle\Entity\Image, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Contenu, label: Image }
-
     app.admin.newsletter:
         class: AppBundle\Admin\NewsletterAdmin
         arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]

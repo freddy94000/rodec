@@ -26,13 +26,13 @@
                             <div class="col-md-4 col-sm-6">
                                 <div class="news-element">
                                     {% if news.imageName %}
-                                        <div class="image-node">
+                                        <a href="{{ path('new', { slug: news.slug }) }}" class="image-node">
                                             <img src="{{ asset('images/' ~ news.imageName) }}"/>
-                                        </div>
+                                        </a>
                                     {% else %}
-                                        <div class="image-node">
+                                        <a href="{{ path('new', { slug: news.slug }) }}" class="image-node">
                                             <img src="{{ asset('default_picture.jpg') }}"/>
-                                        </div>
+                                        </a>
                                     {% endif %}
                                     <div class="info-news">
                                         <p class="date">{{ news.publishAt|date('d/m/Y') }}</p>
