@@ -3,94 +3,37 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contact;
-use AppBundle\Entity\News;
 use AppBundle\Entity\Email;
+use AppBundle\Entity\News;
 use AppBundle\Form\ContactType;
 use AppBundle\Form\EmailFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
-
-//    /**
-//     * @return \Symfony\Component\HttpFoundation\Response
-//     *
-//     * @Route("/", name="default")
-//     */
-//    public function defaultAction()
-//    {
-//        return $this->render('default/default.html.twig');
-//    }
 
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/", name="homepage")
+     * @Route("/contact", name="contact")
+     * @Route("/le-cabinet", name="lecabinet")
+     * @Route("/qui-sommes-nous", name="quisommesnous")
+     * @Route("/nos-valeurs", name="nosvaleurs")
+     * @Route("/vos-interlocuteurs", name="vosinterlocuteurs")
      */
-    public function indexAction(Request $request)
+    public function homeAction(Request $request)
     {
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $node = $nodeRepository->findOneBy(['url' => 'homepage']);
+
+        $teamRepository = $this->getDoctrine()->getRepository('AppBundle:Team');
         $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
-        $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
-        $emailRepository = $this->getDoctrine()->getRepository('AppBundle:Email');
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
-        $em = $this->getDoctrine()->getManager();
-        
-        $news = $newsRepository->getNews();
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $news, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            3/*limit per page*/
-        );
-
-        $page = $pageRepository->findOneBy(['code' => 'qui-sommes-nous']);
-
-        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        
-        $newsletter = new Email();
-        $form = $this->createForm(EmailFormType::class, $newsletter);
-        $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            if (!$emailRepository->findOneBy(['email' => $newsletter->getEmail()])) {
-                $em->persist($newsletter);
-                $em->flush();
-            }
-
-            $this->addFlash(
-                'notice',
-                'Votre inscription à la newsletter a bien été enregistrée'
-            );
-            
-            return $this->redirectToRoute('homepage');
-        }
-
-        return $this->render('default/index.html.twig', [
-            'pagination' => $pagination,
-            'page' => $page,
-            'form' => $form->createView(),
-            'lien' => $lienEspaceClient
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Route("/actualite", name="news")
-     */
-    public function newsListAction(Request $request)
-    {
-        $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
-        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Email();
-        $form = $this->createForm(EmailFormType::class, $newsletter);
-
+        $teams = $teamRepository->findAll();
         $news = $newsRepository->getNews();
 
         $paginator  = $this->get('knp_paginator');
@@ -99,11 +42,38 @@ class DefaultController extends Controller
             $request->query->getInt('page', 1)/*page number*/,
             4/*limit per page*/
         );
+        
+        return $this->render('default/home.html.twig', [
+            'node' => $node,
+            'teams' => $teams,
+            'pagination' => $pagination
+        ]);
+    }
 
-        return $this->render('default/news.html.twig', [
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/actualite", name="actualite")
+     */
+    public function actualitesAction(Request $request)
+    {
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $node = $nodeRepository->findOneBy(['url' => 'actualite']);
+
+        $newsRepository = $this->getDoctrine()->getRepository('AppBundle:News');
+        $news = $newsRepository->getNews();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $news, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            12/*limit per page*/
+        );
+
+        return $this->render('default/actualites.html.twig', [
             'pagination' => $pagination,
-            'form' => $form->createView(),
-            'lien' => $lienEspaceClient
+            'node' => $node
         ]);
     }
 
@@ -116,107 +86,79 @@ class DefaultController extends Controller
      */
     public function newsAction(News $news)
     {
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $node = $nodeRepository->findOneBy(['url' => 'actualite']);
+
         if ($news->getPublishAt() > new \DateTime()) {
             throw new \Exception("L'Actualité n'est pas encore disponible");
         }
 
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
-        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Email();
-        $form = $this->createForm(EmailFormType::class, $newsletter);
-
         return $this->render('default/new.html.twig', [
             'news' => $news,
-            'form' => $form->createView(),
-            'lien' => $lienEspaceClient
+            'node' => $node
         ]);
     }
 
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/accompagnement-international", name="accompagnement-international")
+     * @Route("/pour-qui", name="pourqui")
+     * @Route("/comment", name="comment")
      */
-    public function headerAction()
+    public function internationalAction(Request $request)
     {
         $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $node = $nodeRepository->findOneBy(['url' => 'accompagnement-international']);
+
+        return $this->render('default/international.html.twig', [
+            'node' => $node,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/nos-prestations", name="nos-prestations")
+     * @Route("/comptabilite", name="comptabilite")
+     * @Route("/travaux-courants-de-comptabilite", name="travauxcourants")
+     * @Route("/conseil-adapte", name="conseiladapte")
+     * @Route("/controle-de-gestion", name="controlegestion")
+     * @Route("/droit-du-travail-et-administration-du-personnel", name="administrationdupersonnel")
+     * @Route("/gestion-courante-du-personnel", name="gestioncourante")
+     * @Route("/conseil-specifique", name="conseilspecifique")
+     * @Route("/fiscalite-d-entreprise", name="fiscalite")
+     * @Route("/conseil-fiscal", name="fiscal")
+     * @Route("/accompagnement-fiscal-specifique", name="specifique")
+     * @Route("/fiscalite-des-particuliers", name="particuliers")
+     * @Route("/creation-d-entreprise", name="entreprise")
+     * @Route("/remplacement", name="remplacement")
+     */
+    public function prestationsAction(Request $request)
+    {
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+        $node = $nodeRepository->findOneBy(['url' => 'nos-prestations']);
         
-        $nodes = $nodeRepository->getNodesParent();
-
-        return $this->render('default/header.html.twig', ['nodes' => $nodes]);
+        return $this->render('default/prestations.html.twig', [
+            'node' => $node,
+        ]);
     }
 
     /**
-     * @param $code
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * 
-     * @Route("/{code}", name="page")
+     *
+     * @Route("/mention-legale", name="mention-legale")
      */
-    public function pageAction($code)
+    public function mentionAction(Request $request)
     {
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
         $pageRepository = $this->getDoctrine()->getRepository('AppBundle:Page');
-        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
-        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Email();
-        $form = $this->createForm(EmailFormType::class, $newsletter);
+        $page = $pageRepository->findOneBy(['code' => 'mention-legale']);
 
-        $page = $pageRepository->findOneBy(['code' => $code]);
-
-        if ($page) {
-            return $this->render('default/page.html.twig', [
-                'page' => $page,
-                'form' => $form->createView(),
-                'lien' => $lienEspaceClient
-            ]);
-        }
-
-        $node = $nodeRepository->findOneBy(['url' => $code]);
-
-        if ($node) {
-            return $this->render('default/node.html.twig', [
-                'node' => $node,
-                'form' => $form->createView(),
-                'lien' => $lienEspaceClient
-            ]);
-        }
-    }
-
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function contactAction(Request $request)
-    {
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
-        $email = $informationRepository->findOneBy(['dataKey' => 'email']);
-
-        $em = $this->getDoctrine()->getManager();
-
-        $contact = new Contact();
-
-        $form = $this->createForm(ContactType::class, $contact);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em->persist($contact);
-            $em->flush();
-
-            $message = \Swift_Message::newInstance()
-                ->setSubject($contact->getName() . ' <' . $contact->getEmail() . ' - ' . $contact->getPhoneNumber(). '> vous a envoyé un message depuis rodecconseils.fr' )
-                ->setFrom($email->getDataValue())
-                ->setTo($email->getDataValue())
-                ->setBody($contact->getMessage());
-            $this->get('mailer')->send($message);
-
-            $this->addFlash(
-                'notice',
-                'Votre message a bien été envoyé'
-            );
-
-            return $this->redirectToRoute('homepage');
-        }
-
-        return $this->render('default/contact.html.twig', [
-            'form' => $form->createView(),
-            'informationRepository' => $informationRepository
+        return $this->render('default/mention.html.twig', [
+            'page' => $page,
         ]);
     }
 
@@ -227,15 +169,8 @@ class DefaultController extends Controller
     {
         $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
         $nodes = $nodeRepository->getNodesParent();
-        
-        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
-        $lienEspaceClient = $informationRepository->findOneBy(['dataKey' => 'lien-espace-client']);
-        $newsletter = new Email();
-        $form = $this->createForm(EmailFormType::class, $newsletter);
 
         return $this->render('default/plan.html.twig', [
-            'form' => $form->createView(),
-            'lien' => $lienEspaceClient,
             'nodes' => $nodes,
         ]);
     }
@@ -248,6 +183,118 @@ class DefaultController extends Controller
         $urls = $this->get('app.service.site_map')->getUrls();
 
         return $this->render('default/sitemap.xml.twig', ['urls' => $urls]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * 
+     * @Route("/form-contact", name="form-contact")
+     */
+    public function contactAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $informationRepository = $em->getRepository('AppBundle:Information');
+        $email = $informationRepository->findOneBy(['dataKey' => 'email']);
+        
+        $contact = new Contact();
+        
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            $em->persist($contact);
+            $em->flush();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($contact->getName() . ' <' . $contact->getEmail() . ' - ' . $contact->getPhoneNumber(). '> vous a envoyé un message depuis rodecconseils.fr' )
+                ->setFrom($email->getDataValue())
+                ->setTo($email->getDataValue())
+                ->setBody($contact->getMessage());
+            $this->get('mailer')->send($message);
+            
+            $this->addFlash(
+                'notice',
+                'Votre message a bien été envoyé'
+            );
+        } else {
+            $this->addFlash(
+                'error',
+                'Une erreur est survenue lors de l\'envoi de votre message'
+            );
+        }
+        
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/form-newsletter", name="form-newsletter")
+     */
+    public function newsletterAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $emailRepository = $em->getRepository('AppBundle:Email');
+
+        $newsletter = new Email();
+
+        $form = $this->createForm(EmailFormType::class, $newsletter);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if (!$emailRepository->findOneBy(['email' => $newsletter->getEmail()])) {
+                $em->persist($newsletter);
+                $em->flush();
+            }
+
+            $this->addFlash(
+                'notice',
+                'Votre inscription à la newsletter a bien été enregistrée'
+            );
+        } else {
+            $this->addFlash(
+                'error',
+                'Une erreur est survenue lors de l\'envoi de votre message'
+            );
+        }
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    public function footerAction()
+    {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        
+        $contact = new Contact();
+        $contactForm = $this->createForm(ContactType::class, $contact);
+        
+        $newsletter = new Email();
+        $newsletterForm = $this->createForm(EmailFormType::class, $newsletter);
+        
+        return $this->render('default/footer.html.twig', [
+            'contactForm' => $contactForm->createView(),
+            'informationRepository' => $informationRepository,
+            'newsletterForm' => $newsletterForm->createView(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function headerAction()
+    {
+        $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
+        $nodeRepository = $this->getDoctrine()->getRepository('AppBundle:Node');
+
+        $nodes = $nodeRepository->getNodesParent();
+
+        return $this->render('default/header.html.twig', [
+            'nodes' => $nodes,
+            'informationRepository' => $informationRepository,
+        ]);
     }
 
     /**

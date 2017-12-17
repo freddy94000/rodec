@@ -1,18 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block meta %}
-    {% if news.description %}
-        <meta name="description" content="{{ news.description }}">
-        {% if news.keyword %}
-            <meta name="keywords" content="{{ news.keyword }}">
-        {% endif %}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block title %}
-    {{ news.title }} - {{ parent() }}
+    {{ page.title }} - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -20,18 +9,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="section-heading text-center">{{ news.title }}</h2>
-                    {% if news.imageName %}
+                    <h2 class="section-heading text-center">{{ page.title }}</h2>
+                    {% if page.imageName %}
                         <div class="image-page">
-                            <img src="{{ asset('images/' ~ news.imageName) }}"/>
+                            <img src="{{ asset('images/' ~ page.imageName) }}"/>
                         </div>
                     {% endif %}
-                    {{ news.content|raw }}
+                    {{ page.content|raw }}
                 </div>
             </div>
         </div>
     </section>
 {% endblock %}
+
+
 
 {% block javascripts %}
     {{ parent() }}

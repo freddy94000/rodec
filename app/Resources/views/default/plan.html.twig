@@ -5,58 +5,34 @@
 {% endblock %}
 
 {% block body %}
-    <ol class="breadcrumb">
-        <li><a href="{{ path('homepage') }}">Accueil</a></li>
-        <li class="active">Plan du site</li>
-    </ol>
-    <div class="row">
-        <div class="col-sm-17 col-xs-24">
-            <h1>Plan du site</h1>
-            <ul>
-                {% for node in nodes %}
-                    {% if node.page %}
-                        {% set url = path('page', { 'code': node.page.code }) %}
-                    {% elseif node.nodeChilds|length > 0 %}
-                        {% set url = path('page', { 'code': node.url }) %}
-                    {% elseif node.url %}
-                        {% set url = path(node.url) %}
-                    {% else %}
-                        {% set url = '#' %}
-                    {% endif %}
-                    <li>
-                        <a href="{{ url }}">{{ node.title }}</a>
-                        {% if node.nodeChilds|length > 0 %}
-                            <ul>
-                                {% for nodeChild in node.nodeChilds %}
-                                    {% if nodeChild.page %}
-                                        {% set urlChild = path('page', { 'code': nodeChild.page.code }) %}
-                                    {% elseif nodeChild.url %}
-                                        {% set urlChild = path('page', {'code': nodeChild.url}) %}
-                                    {% else %}
-                                        {% set urlChild = '#' %}
-                                    {% endif %}
-                                    <li>
-                                        <a href="{{ urlChild }}">{{ nodeChild.title }}</a>
-                                        {% if nodeChild.nodeChilds|length > 0 %}
-                                            <ul>
-                                                {% for nodeChildChild in nodeChild.nodeChilds %}
-                                                    {% set urlChildChild = path('page', { 'code': nodeChildChild.page.code }) %}
-                                                    <li><a href="{{ urlChildChild }}">{{ nodeChildChild.title }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-                <li><a href="{{ path('news') }}">Actualités</a></li>
-                <li><a href="{{ path('page', {'code': 'mention-legale'}) }}">Mention Légale</a></li>
-            </ul>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-heading text-center">Plan du site</h2>
+                    <ul>
+                        {% for node in nodes %}
+                            {% if node.url and node.url != 'contact' %}
+                                <li>
+                                    <a href="{{ path(node.url) }}">{{ node.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><a href="{{ path('mention-legale') }}">Mention Légale</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-7 col-xs-24">
-            {% include 'default/block.html.twig' %}
-        </div>
-    </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        (function($) {
+            "use strict";
+
+            $('#mainNav').removeClass('affix-top').addClass('affix')
+        })(jQuery);
+    </script>
 {% endblock %}

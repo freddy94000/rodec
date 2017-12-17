@@ -33,41 +33,33 @@ class SiteMap
             'priority' => 1,
         ];
 
-        $pages = $this->em->getRepository('AppBundle:Page')->findAll();
-        foreach ($pages as $page) {
-            $urls[] = [
-                'loc' => $this->router->generate('page', ['code' => $page->getCode()], Router::ABSOLUTE_URL),
-                'priority' => 0.9,
-            ];
-        }
-
-        $news = $this->em->getRepository('AppBundle:News')->getNews()->getResult();
-        foreach ($news as $new) {
-            $date = ($new->getPublishAt()) ? $new->getPublishAt() : $new->getCreatedAt();
-            $urls[] = [
-                'loc' => $this->router->generate('new', ['slug' => $new->getSlug()], Router::ABSOLUTE_URL),
-                'lastmod' => $date->format('Y-m-d'),
-                'priority' => 0.8,
-            ];
-        }
+//        $news = $this->em->getRepository('AppBundle:News')->getNews()->getResult();
+//        foreach ($news as $new) {
+//            $date = ($new->getPublishAt()) ? $new->getPublishAt() : $new->getCreatedAt();
+//            $urls[] = [
+//                'loc' => $this->router->generate('new', ['slug' => $new->getSlug()], Router::ABSOLUTE_URL),
+//                'lastmod' => $date->format('Y-m-d'),
+//                'priority' => 0.8,
+//            ];
+//        }
 
         $urls[] = [
-            'loc' => $this->router->generate('news', [], Router::ABSOLUTE_URL),
+            'loc' => $this->router->generate('accompagnement-international', [], Router::ABSOLUTE_URL),
             'priority' => 0.7,
         ];
 
-        $nodes = $this->em->getRepository('AppBundle:Node')->findAll();
-        foreach ($nodes as $node) {
-            if (!$node->getPage()) {
-                $urls[] = [
-                    'loc' => $this->router->generate('page', ['code' => $node->getUrl()], Router::ABSOLUTE_URL),
-                    'priority' => 0.6,
-                ];
-            }
-        }
+        $urls[] = [
+            'loc' => $this->router->generate('nos-prestations', [], Router::ABSOLUTE_URL),
+            'priority' => 0.7,
+        ];
+
+//        $urls[] = [
+//            'loc' => $this->router->generate('actualite', [], Router::ABSOLUTE_URL),
+//            'priority' => 0.6,
+//        ];
 
         $urls[] = [
-            'loc' => $this->router->generate('contact', [], Router::ABSOLUTE_URL),
+            'loc' => $this->router->generate('mention-legale', [], Router::ABSOLUTE_URL),
             'priority' => 0.5,
         ];
 

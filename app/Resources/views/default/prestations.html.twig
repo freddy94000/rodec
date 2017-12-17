@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {% if node.description %}
+        <meta name="description" content="{{ node.description }}">
+        {% if node.keyword %}
+            <meta name="keywords" content="{{ node.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ node.title }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <header style="
+            background: url('{{ asset('images/' ~ node.imageName) }}') center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            ">
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">{{ node.title }}</h1>
+                <hr>
+                <p>{{ node.accroche }}</p>
+            </div>
+        </div>
+    </header>
+
+    {% for nodeChild in node.nodeChilds %}
+        {% set nodeIndex = loop.index %}
+        {% if nodeChild.page %}
+            {% set page = nodeChild.page %}
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="section-heading text-center">{{ page.title }}</h2>
+                            {% if page.imageName %}
+                                <div class="image-page">
+                                    <img src="{{ asset('images/' ~ page.imageName) }}"/>
+                                </div>
+                            {% endif %}
+                            {{ page.content|raw }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% else %}
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="section-heading text-center">{{ nodeChild.title }}</h2>
+
+                            <div class="panel-group" id="accordion{{ nodeIndex }}" role="tablist" aria-multiselectable="true">
+
+                                {% for nodeChildChild in nodeChild.nodeChilds %}
+                                    {% set page = nodeChildChild.page %}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="heading{{ nodeIndex ~ loop.index }}">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion{{ nodeIndex }}" href="#collapse{{ nodeIndex ~ loop.index }}" aria-controls="collapse{{ nodeIndex ~ loop.index }}"
+                                                   aria-expanded="{{ loop.first ? 'true' : 'false' }}"
+                                                   {% if not loop.first %}class="collapsed"{% endif %}
+                                                >
+                                                    {{ page.title }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse{{ nodeIndex ~ loop.index }}" class="panel-collapse collapse {% if loop.first %}in{% endif %}" role="tabpanel" aria-labelledby="heading{{ nodeIndex ~ loop.index }}">
+                                            {% if page.imageName %}
+                                                <div class="image-page">
+                                                    <img src="{{ asset('images/' ~ page.imageName) }}"/>
+                                                </div>
+                                            {% endif %}
+                                            <div class="panel-body">{{ page.content|raw }}</div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        (function($) {
+            "use strict";
+
+            $('body').scrollspy({
+                target: '.navbar-fixed-top',
+                offset: 51
+            });
+
+            $('#mainNav').affix({
+                offset: {
+                    top: 100
+                }
+            })
+        })(jQuery);
+    </script>
+{% endblock %}

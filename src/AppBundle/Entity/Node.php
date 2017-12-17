@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Node
  *
  * @ORM\Table(name="node")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NodeRepository")
+ * @Vich\Uploadable
  */
 class Node
 {
@@ -72,6 +75,32 @@ class Node
      */
     private $keyword;
 
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="accroche", type="string", length=255, nullable=true)
+     */
+    private $accroche;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="image", fileNameProperty="imageName")
+     */
+    protected $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
+     */
+    protected $imageName;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
+
 
     /**
      * Constructor
@@ -86,7 +115,7 @@ class Node
      */
     public function __toString()
     {
-        return $this->title;
+        return ($this->title) ?: '';
     }
 
     /**
@@ -305,5 +334,74 @@ class Node
     public function getKeyword()
     {
         return $this->keyword;
+    }
+
+    /**
+     * Set accroche
+     *
+     * @param string $accroche
+     *
+     * @return Node
+     */
+    public function setAccroche($accroche)
+    {
+        $this->accroche = $accroche;
+
+        return $this;
+    }
+
+    /**
+     * Get accroche
+     *
+     * @return string
+     */
+    public function getAccroche()
+    {
+        return $this->accroche;
+    }
+
+    /**
+     * Set imageName
+     *
+     * @param string $imageName
+     *
+     * @return $this
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get imageName
+     *
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param File|null $image
+     * @return $this
+     */
+    public function setImageFile($image = null)
+    {
+        $this->imageFile = $image;
+
+        $this->updatedAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 }

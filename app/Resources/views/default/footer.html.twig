@@ -1,0 +1,77 @@
+<footer id="contact">
+    <section class="footer-info">
+        <div class="container">
+            <div class="col-md-12">
+                <h2 class="footer-title text-center">Contact</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="container-contact">
+                            <div class="title-contact-div">
+                                <h3>Nous contactez</h3>
+                            </div>
+                        </div>
+                        <form id="contact-form" method="POST" action="{{ path('form-contact') }}">
+                            {{form_errors(contactForm)}}
+                            <div class="form-group">
+                                {{ form_widget(contactForm.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(contactForm.phoneNumber) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(contactForm.email) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(contactForm.message) }}
+                            </div>
+                            {{ form_widget(contactForm._token) }}
+                            <button class="btn btn-default" type="submit" id="mailSubmit">Envoyer</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4" id="contact-info">
+                        <h3>Plan d'accès et coordonnées</h3>
+                        <p>{{ informationRepository.findOneByDataKey('entreprise').dataValue() }}</p>
+                        <p>{{ informationRepository.findOneByDataKey('adresse').dataValue() }}</p>
+                        <p>{{ informationRepository.findOneByDataKey('code-postal').dataValue() }} {{ informationRepository.findOneByDataKey('ville').dataValue() }}</p>
+                        <p>Téléphone: {{ informationRepository.findOneByDataKey('telephone').dataValue() }}</p>
+                        <p>Portable: {{ informationRepository.findOneByDataKey('portable').dataValue() }}</p>
+                        <p>Email: <a href="mailto:{{ informationRepository.findOneByDataKey('email').dataValue() }}">{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="block-newsletter">
+                            <h3>Newsletter</h3>
+                            <form method="post" action="{{ path('form-newsletter') }}">
+                                <div class="form-group">
+                                    {{ form_widget(newsletterForm.email) }}
+                                </div>
+                                {{ form_widget(newsletterForm._token) }}
+                                <button class="btn btn-default btn-block" type="submit">M'inscrire</button>
+                            </form>
+                        </div>
+                        <div class="block-client">
+                            <a class="btn btn-default btn-block" id="link-customer-space" href="{{ informationRepository.findOneByDataKey('lien-espace-client').dataValue() }}" target="_blank">Mon Espace Client</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="padding: 0; height: 400px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12" style="padding: 0;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2623.322349949942!2d2.3220237152469205!3d48.89019357929065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66facce34f113%3A0xc59e65dba251b734!2s150+Rue+Legendre%2C+75017+Paris!5e0!3m2!1sfr!2sfr!4v1501869859144" height="400" frameborder="0" style="border:0; width: 100%;" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <p class="text-muted">
+                © 2017 Rodec Conseils. Tous droits réservés.<br />
+                <a href="{{ path('mention-legale') }}">Mention légale</a>
+                &nbsp; &nbsp;| &nbsp; &nbsp;<a href="{{ path('plan') }}">Plan du site</a>
+            </p>
+        </div>
+    </section>
+</footer>

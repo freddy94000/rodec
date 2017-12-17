@@ -34,12 +34,6 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Contenu, label: Actualités }
 
-    app.admin.image:
-        class: AppBundle\Admin\ImageAdmin
-        arguments: [~, AppBundle\Entity\Image, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Contenu, label: Image }
-
     app.admin.newsletter:
         class: AppBundle\Admin\NewsletterAdmin
         arguments: [~, AppBundle\Entity\Newsletter, SonataAdminBundle:CRUD]
@@ -61,3 +55,9 @@ services:
     app.service.site_map:
         class: AppBundle\Service\SiteMap
         arguments: ['@doctrine.orm.entity_manager', '@router']
+
+    app.admin.team:
+        class: AppBundle\Admin\TeamAdmin
+        arguments: [~, AppBundle\Entity\Team, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Contenu, label: Equipe }

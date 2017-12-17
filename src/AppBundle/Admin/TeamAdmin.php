@@ -6,11 +6,12 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
-class NodeAdmin extends AbstractAdmin
+class TeamAdmin extends AbstractAdmin
 {
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
@@ -25,13 +26,12 @@ class NodeAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', null, ['label' => 'Titre'])
-            ->add('nodeParent', null, ['label' => 'Noeud Parent'])
-            ->add('url', null, ['label' => 'Url'])
-            ->add('page', null, ['label' => 'Page associé'])
-            ->add('rank', null, ['label' => 'Rang'])
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('poste', null, ['label' => 'Poste'])
             ->add('_action', null, array(
                 'actions' => array(
+                    'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
@@ -53,19 +53,10 @@ class NodeAdmin extends AbstractAdmin
         }
 
         $formMapper
-            ->with('Noeud')
-                ->add('title', null, ['label' => 'Titre'])
-                ->add('accroche', 'textarea', ['label' => 'Accroche', 'required' => false])
-                ->add('nodeParent', null, ['label' => 'Noeud Parent'])
-                ->add('url', null, ['label' => 'Url'])
-                ->add('page', null, ['label' => 'Page associé'])
-                ->add('rank', null, ['label' => 'Rang'])
-                ->add('imageFile', 'Vich\UploaderBundle\Form\Type\VichFileType', $imageOptions)
-            ->end()
-            ->with('Seo')
-                ->add('description', 'textarea', ['label' => 'Meta Description', 'required' => false])
-                ->add('keyword', null, ['label' => 'Meta Keyword'])
-            ->end()
+            ->add('firstname', null, ['label' => 'Prénom'])
+            ->add('lastname', null, ['label' => 'Nom'])
+            ->add('poste', null, ['label' => 'Poste'])
+            ->add('imageFile', 'Vich\UploaderBundle\Form\Type\VichFileType', $imageOptions)
         ;
     }
 }

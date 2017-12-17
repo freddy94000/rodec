@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    {% if node.description %}
+        <meta name="description" content="{{ node.description }}">
+        {% if node.keyword %}
+            <meta name="keywords" content="{{ node.keyword }}">
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ node.title }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section class="section-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-heading text-center">Actualités</h2>
+                    <div class="row">
+                        {% for news in pagination %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="news-element">
+                                    {% if news.imageName %}
+                                        <a href="{{ path('new', { slug: news.slug }) }}" class="image-node">
+                                            <img src="{{ asset('images/' ~ news.imageName) }}"/>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('new', { slug: news.slug }) }}" class="image-node">
+                                            <img src="{{ asset('default_picture.jpg') }}"/>
+                                        </a>
+                                    {% endif %}
+                                    <div class="info-news">
+                                        <p class="date">{{ news.publishAt|date('d/m/Y') }}</p>
+                                        <h3><a href="{{ path('new', { slug: news.slug }) }}">{{ news.title|truncate(20, true, '...') }}</a></h3>
+                                        <div class="content">{{ news.content|truncate(200, true, '...')|raw }}</div>
+                                        <a class="btn btn-default" href="{{ path('new', { slug: news.slug }) }}">Voir la suite</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if (loop.index%3) == 0 %}
+                    </div>
+                    <div class="row">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        (function($) {
+            "use strict";
+
+            $('#mainNav').removeClass('affix-top').addClass('affix')
+        })(jQuery);
+    </script>
+{% endblock %}

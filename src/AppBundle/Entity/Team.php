@@ -3,18 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * Page
+ * Team
  *
- * @ORM\Table(name="page")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PageRepository")
+ * @ORM\Table(name="team")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
  * @Vich\Uploadable
  */
-class Page
+class Team
 {
     /**
      * @var int
@@ -28,29 +27,23 @@ class Page
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"title"})
-     * @ORM\Column(name="code", type="string", length=255, unique=true)
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
-    private $code;
+    private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255)
      */
-    private $title;
+    private $lastname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="poste", type="string", length=255)
      */
-    private $content;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Node", mappedBy="page")
-     */
-    protected $node;
+    private $poste;
 
     /**
      * @var File
@@ -73,14 +66,6 @@ class Page
 
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Get id
      *
      * @return int
@@ -91,99 +76,75 @@ class Page
     }
 
     /**
-     * Set code
+     * Set firstname
      *
-     * @param string $code
+     * @param string $firstname
      *
-     * @return Page
+     * @return Team
      */
-    public function setCode($code)
+    public function setFirstname($firstname)
     {
-        $this->code = $code;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
     /**
-     * Get code
+     * Get firstname
      *
      * @return string
      */
-    public function getCode()
+    public function getFirstname()
     {
-        return $this->code;
+        return $this->firstname;
     }
 
     /**
-     * Set title
+     * Set lastname
      *
-     * @param string $title
+     * @param string $lastname
      *
-     * @return Page
+     * @return Team
      */
-    public function setTitle($title)
+    public function setLastname($lastname)
     {
-        $this->title = $title;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get lastname
      *
      * @return string
      */
-    public function getTitle()
+    public function getLastname()
     {
-        return $this->title;
+        return $this->lastname;
     }
 
     /**
-     * Set content
+     * Set poste
      *
-     * @param string $content
+     * @param string $poste
      *
-     * @return Page
+     * @return Team
      */
-    public function setContent($content)
+    public function setPoste($poste)
     {
-        $this->content = $content;
+        $this->poste = $poste;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get poste
      *
      * @return string
      */
-    public function getContent()
+    public function getPoste()
     {
-        return $this->content;
-    }
-
-    /**
-     * Set node
-     *
-     * @param \AppBundle\Entity\Node $node
-     *
-     * @return Page
-     */
-    public function setNode(Node $node = null)
-    {
-        $this->node = $node;
-
-        return $this;
-    }
-
-    /**
-     * Get node
-     *
-     * @return \AppBundle\Entity\Node
-     */
-    public function getNode()
-    {
-        return $this->node;
+        return $this->poste;
     }
 
     /**
@@ -230,4 +191,5 @@ class Page
     {
         return $this->imageFile;
     }
+    
 }
