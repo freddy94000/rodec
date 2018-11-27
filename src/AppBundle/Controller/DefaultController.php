@@ -210,6 +210,8 @@ class DefaultController extends Controller
                     'error',
                     'Merci de cocher la case.'
                 );
+
+                return $this->redirectToRoute('homepage');
             }
 
             $em->persist($contact);
