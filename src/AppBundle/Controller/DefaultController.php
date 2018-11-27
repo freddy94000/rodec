@@ -188,7 +188,8 @@ class DefaultController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * 
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route("/form-contact", name="form-contact")
      */
     public function contactAction(Request $request)
@@ -204,6 +205,13 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
+            if (!$this->captchaverify($request->get('g-recaptcha-response'))) {
+                $this->addFlash(
+                    'error',
+                    'Merci de cocher la case.'
+                );
+            }
+
             $em->persist($contact);
             $em->flush();
 
@@ -229,8 +237,28 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param $recaptcha
+     * @return mixed
+     */
+    private function captchaverify($recaptcha) {
+        $url = "https://www.google.com/recaptcha/api/siteverify";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array("secret"=>"6LcGdX0UAAAAANfMtyRZ6j8Y2ex_Ca7W_vGZwJEL","response"=>$recaptcha));
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $data = json_decode($response);
+
+        return $data->success;
+    }
+
+    /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route("/form-newsletter", name="form-newsletter")
      */
@@ -264,6 +292,9 @@ class DefaultController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function footerAction()
     {
         $informationRepository = $this->getDoctrine()->getRepository('AppBundle:Information');
