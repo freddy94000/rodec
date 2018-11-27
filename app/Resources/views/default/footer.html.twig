@@ -35,8 +35,8 @@
                         <p>{{ informationRepository.findOneByDataKey('adresse').dataValue() }}</p>
                         <p>{{ informationRepository.findOneByDataKey('code-postal').dataValue() }} {{ informationRepository.findOneByDataKey('ville').dataValue() }}</p>
                         <p>Téléphone: {{ informationRepository.findOneByDataKey('telephone').dataValue() }}</p>
-                        <p>Portable: {{ informationRepository.findOneByDataKey('portable').dataValue() }}</p>
-                        <p>Email: <a href="mailto:{{ informationRepository.findOneByDataKey('email').dataValue() }}">{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></p>
+                        <!--<p>Portable: {{ informationRepository.findOneByDataKey('portable').dataValue() }}</p>
+                        <p>Email: <a href="mailto:{{ informationRepository.findOneByDataKey('email').dataValue() }}">{{ informationRepository.findOneByDataKey('email').dataValue() }}</a></p>-->
                     </div>
                     <div class="col-md-4">
                         <div class="block-newsletter">
